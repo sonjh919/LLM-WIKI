@@ -1,0 +1,1283 @@
+{
+  "edges": [
+    {
+      "color": "#cc99ff",
+      "fromNode": "cpu-card",
+      "fromSide": "right",
+      "id": "edge1",
+      "toNode": "bus-card",
+      "toSide": "left"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "ram-card",
+      "fromSide": "right",
+      "id": "edge2",
+      "toNode": "bus-card",
+      "toSide": "left"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "bus-card",
+      "fromSide": "right",
+      "id": "edge3",
+      "toNode": "storage-card",
+      "toSide": "left"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "bus-card",
+      "fromSide": "right",
+      "id": "edge4",
+      "toNode": "io-card",
+      "toSide": "left"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "cpu-card",
+      "fromSide": "left",
+      "id": "edge5",
+      "label": "상세 설명",
+      "toNode": "cpu-desc",
+      "toSide": "right"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "ram-card",
+      "fromSide": "top",
+      "id": "edge6",
+      "label": "상세 설명",
+      "toNode": "ram-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "bus-card",
+      "fromSide": "bottom",
+      "id": "edge7",
+      "label": "상세 설명",
+      "toNode": "bus-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffff99",
+      "fromNode": "storage-card",
+      "fromSide": "right",
+      "id": "edge8",
+      "label": "상세 설명",
+      "toNode": "storage-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#99ccff",
+      "fromNode": "io-card",
+      "fromSide": "bottom",
+      "id": "edge9",
+      "label": "상세 설명",
+      "toNode": "io-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "control-card",
+      "fromSide": "bottom",
+      "id": "edge11",
+      "label": "제어 신호",
+      "toNode": "alu-card",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "alu-card",
+      "fromSide": "right",
+      "id": "edge12",
+      "label": "데이터 교환",
+      "toNode": "register-card",
+      "toSide": "left"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "control-card",
+      "fromSide": "bottom",
+      "id": "edge13",
+      "label": "제어 신호",
+      "toNode": "register-card",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "control-card",
+      "fromSide": "top",
+      "id": "edge14",
+      "label": "상세 설명",
+      "toNode": "control-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "alu-card",
+      "fromSide": "bottom",
+      "id": "edge15",
+      "label": "상세 설명",
+      "toNode": "alu-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "register-card",
+      "fromSide": "bottom",
+      "id": "edge16",
+      "label": "상세 설명",
+      "toNode": "register-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "control-desc",
+      "fromSide": "left",
+      "id": "edge17",
+      "label": "명령어 실행 사이클",
+      "toNode": "cycle-overview",
+      "toSide": "right"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "fetch-card",
+      "fromSide": "right",
+      "id": "edge18",
+      "label": "→",
+      "toNode": "decode-card",
+      "toSide": "left"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "decode-card",
+      "fromSide": "right",
+      "id": "edge19",
+      "label": "→",
+      "toNode": "execute-card",
+      "toSide": "left"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "execute-card",
+      "fromSide": "top",
+      "id": "edge20",
+      "label": "반복",
+      "toNode": "fetch-card",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "cycle-overview",
+      "fromSide": "left",
+      "id": "edge21",
+      "label": "개요",
+      "toNode": "cycle-group",
+      "toSide": "right"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "fetch-card",
+      "fromSide": "bottom",
+      "id": "edge22",
+      "label": "상세 설명",
+      "toNode": "fetch-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "decode-card",
+      "fromSide": "bottom",
+      "id": "edge23",
+      "label": "상세 설명",
+      "toNode": "decode-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "execute-card",
+      "fromSide": "bottom",
+      "id": "edge24",
+      "label": "상세 설명",
+      "toNode": "execute-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "cpu-desc",
+      "fromSide": "left",
+      "id": "edge10",
+      "label": "CPU 내부",
+      "toNode": "cpu-group",
+      "toSide": "right"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "bus-desc",
+      "fromSide": "bottom",
+      "id": "edge25",
+      "label": "버스 종류",
+      "toNode": "bus-group",
+      "toSide": "top"
+    },
+    {
+      "color": "#9999ff",
+      "fromNode": "address-card",
+      "fromSide": "bottom",
+      "id": "edge28",
+      "label": "상세 설명",
+      "toNode": "address-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#9999ff",
+      "fromNode": "data-card",
+      "fromSide": "bottom",
+      "id": "edge29",
+      "label": "상세 설명",
+      "toNode": "data-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#9999ff",
+      "fromNode": "control-bus-card",
+      "fromSide": "bottom",
+      "id": "edge30",
+      "label": "상세 설명",
+      "toNode": "control-bus-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "bus-group",
+      "fromSide": "left",
+      "id": "edge31",
+      "label": "협력 과정",
+      "toNode": "memory-rw",
+      "toSide": "right"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "register-desc",
+      "fromSide": "bottom",
+      "id": "edge32",
+      "label": "레지스터 종류",
+      "toNode": "register-group",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "pc-card",
+      "fromSide": "bottom",
+      "id": "edge33",
+      "label": "상세 설명",
+      "toNode": "pc-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "ir-card",
+      "fromSide": "bottom",
+      "id": "edge34",
+      "label": "상세 설명",
+      "toNode": "ir-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "mar-card",
+      "fromSide": "bottom",
+      "id": "edge35",
+      "label": "상세 설명",
+      "toNode": "mar-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "mbr-card",
+      "fromSide": "bottom",
+      "id": "edge36",
+      "label": "상세 설명",
+      "toNode": "mbr-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "gpr-card",
+      "fromSide": "bottom",
+      "id": "edge37",
+      "label": "상세 설명",
+      "toNode": "gpr-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffcccc",
+      "fromNode": "register-group",
+      "fromSide": "left",
+      "id": "edge38",
+      "label": "실행 사이클",
+      "toNode": "register-cycle",
+      "toSide": "right"
+    },
+    {
+      "color": "#99ff99",
+      "fromNode": "ram-desc",
+      "fromSide": "right",
+      "id": "edge43",
+      "label": "메모리 계층",
+      "toNode": "memory-hierarchy-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#99ff99",
+      "fromNode": "memory-hierarchy-desc",
+      "fromSide": "right",
+      "id": "edge45",
+      "label": "캐시",
+      "toNode": "cache-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#99ff99",
+      "fromNode": "memory-hierarchy-desc",
+      "fromSide": "right",
+      "id": "edge46",
+      "label": "지역성",
+      "toNode": "locality-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "ram-desc",
+      "fromSide": "top",
+      "id": "edge47",
+      "label": "할당 기법",
+      "toNode": "memory-allocation-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "virtual-memory-desc",
+      "fromSide": "right",
+      "id": "edge48",
+      "label": "페이징",
+      "toNode": "paging-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "paging-desc",
+      "fromSide": "right",
+      "id": "edge50",
+      "label": "페이지 폴트",
+      "toNode": "page-fault-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "page-table-desc",
+      "fromSide": "right",
+      "id": "edge51",
+      "label": "TLB",
+      "toNode": "tlb-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "page-fault-desc",
+      "fromSide": "right",
+      "id": "edge52",
+      "label": "스왑",
+      "toNode": "swap-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "paging-desc",
+      "fromSide": "right",
+      "id": "edge49",
+      "label": "페이지 테이블",
+      "toNode": "page-table-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "page-fault-desc",
+      "fromSide": "top",
+      "id": "edge54",
+      "label": "페이지 교체",
+      "toNode": "page-replacement-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "page-replacement-desc",
+      "fromSide": "top",
+      "id": "edge56",
+      "label": "LRU",
+      "toNode": "lru-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "page-replacement-desc",
+      "fromSide": "top",
+      "id": "edge57",
+      "label": "LFU",
+      "toNode": "lfu-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "page-replacement-desc",
+      "fromSide": "top",
+      "id": "edge58",
+      "label": "Clock",
+      "toNode": "clock-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "page-replacement-desc",
+      "fromSide": "top",
+      "id": "edge55",
+      "label": "FIFO",
+      "toNode": "fifo-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "segmentation-desc",
+      "fromSide": "right",
+      "id": "edge62",
+      "label": "외부 단편화",
+      "toNode": "fragmentation-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "paging-desc",
+      "fromSide": "bottom",
+      "id": "edge63",
+      "label": "내부 단편화",
+      "toNode": "fragmentation-desc",
+      "toSide": "top"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "memory-allocation-desc",
+      "fromSide": "right",
+      "id": "edge60",
+      "label": "세그먼테이션",
+      "toNode": "segmentation-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "memory-allocation-desc",
+      "fromSide": "right",
+      "id": "edge61",
+      "label": "페이징",
+      "toNode": "paging-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#99ff99",
+      "fromNode": "cache-desc",
+      "fromSide": "top",
+      "id": "edge64",
+      "label": "기반 원리",
+      "toNode": "locality-desc",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "physical-limit-desc",
+      "fromSide": "right",
+      "id": "edge66",
+      "label": "가상 메모리",
+      "toNode": "virtual-memory-desc",
+      "toSide": "left"
+    },
+    {
+      "color": "#66ccff",
+      "fromNode": "memory-allocation-desc",
+      "fromSide": "left",
+      "id": "edge59",
+      "label": "물리 메모리의 한계",
+      "toNode": "physical-limit-desc",
+      "toSide": "bottom"
+    }
+  ],
+  "nodes": [
+    {
+      "color": "#e0e0e0",
+      "height": 900,
+      "id": "mainboard",
+      "label": "메인보드",
+      "styleAttributes": {
+      },
+      "type": "group",
+      "width": 1800,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "color": "#ffcccc",
+      "height": 450,
+      "id": "register-group",
+      "label": "레지스터 종류",
+      "styleAttributes": {
+      },
+      "type": "group",
+      "width": 3435,
+      "x": -4400,
+      "y": 3280
+    },
+    {
+      "color": "#ff9999",
+      "height": 600,
+      "id": "cpu-group",
+      "label": "CPU 내부 구조",
+      "styleAttributes": {
+      },
+      "type": "group",
+      "width": 1570,
+      "x": -4000,
+      "y": 0
+    },
+    {
+      "color": "#cc99ff",
+      "height": 450,
+      "id": "bus-group",
+      "label": "System Bus 종류",
+      "styleAttributes": {
+      },
+      "type": "group",
+      "width": 1970,
+      "x": -120,
+      "y": 2160
+    },
+    {
+      "color": "#ff9999",
+      "height": 400,
+      "id": "cycle-group",
+      "label": "명령어 실행 사이클",
+      "styleAttributes": {
+      },
+      "type": "group",
+      "width": 1800,
+      "x": -7360,
+      "y": -800
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/페이지교체알고리즘/LRU.md",
+      "height": 850,
+      "id": "lru-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": 3235,
+      "y": -8004
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/페이지교체알고리즘/LFU.md",
+      "height": 850,
+      "id": "lfu-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 4060,
+      "y": -8004
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/페이지교체알고리즘/Clock.md",
+      "height": 850,
+      "id": "clock-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": 5095,
+      "y": -8004
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/페이지교체알고리즘/페이지 교체 알고리즘.md",
+      "height": 850,
+      "id": "page-replacement-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 3200,
+      "y": -6854
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/페이지교체알고리즘/FIFO.md",
+      "height": 850,
+      "id": "fifo-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 2200,
+      "y": -8004
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/레지스터종류/MAR.md",
+      "height": 850,
+      "id": "mar-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -3075,
+      "y": 3960
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/레지스터종류/MBR.md",
+      "height": 850,
+      "id": "mbr-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -2105,
+      "y": 3960
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/레지스터종류/PC.md",
+      "height": 850,
+      "id": "pc-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -4950,
+      "y": 3960
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/레지스터종류/IR.md",
+      "height": 850,
+      "id": "ir-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -4045,
+      "y": 3960
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/레지스터종류/범용 레지스터.md",
+      "height": 850,
+      "id": "gpr-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -1220,
+      "y": 3960
+    },
+    {
+      "color": "#9999ff",
+      "height": 250,
+      "id": "address-card",
+      "styleAttributes": {
+      },
+      "text": "주소 버스\n(Address Bus)",
+      "type": "text",
+      "width": 500,
+      "x": 75,
+      "y": 2240
+    },
+    {
+      "color": "#9999ff",
+      "height": 250,
+      "id": "data-card",
+      "styleAttributes": {
+      },
+      "text": "데이터 버스\n(Data Bus)",
+      "type": "text",
+      "width": 500,
+      "x": 675,
+      "y": 2240
+    },
+    {
+      "color": "#9999ff",
+      "height": 250,
+      "id": "control-bus-card",
+      "styleAttributes": {
+      },
+      "text": "제어 버스\n(Control Bus)",
+      "type": "text",
+      "width": 500,
+      "x": 1275,
+      "y": 2240
+    },
+    {
+      "color": "#9999ff",
+      "file": "링크/컴퓨터구조/컴퓨터부품/SystemBus내부/데이터 버스.md",
+      "height": 850,
+      "id": "data-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": 550,
+      "y": 2840
+    },
+    {
+      "color": "#ffcccc",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/레지스터.md",
+      "height": 850,
+      "id": "register-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 590,
+      "x": -3000,
+      "y": 840
+    },
+    {
+      "color": "#ffcccc",
+      "height": 300,
+      "id": "register-card",
+      "styleAttributes": {
+      },
+      "text": "레지스터",
+      "type": "text",
+      "width": 630,
+      "x": -3110,
+      "y": 250
+    },
+    {
+      "color": "#ff9999",
+      "height": 250,
+      "id": "mar-card",
+      "styleAttributes": {
+      },
+      "text": "MAR\n(Memory Address Register)",
+      "type": "text",
+      "width": 580,
+      "x": -2990,
+      "y": 3360
+    },
+    {
+      "color": "#ff9999",
+      "height": 250,
+      "id": "mbr-card",
+      "styleAttributes": {
+      },
+      "text": "MBR\n(Memory Buffer Register)",
+      "type": "text",
+      "width": 580,
+      "x": -2310,
+      "y": 3360
+    },
+    {
+      "color": "#ff9999",
+      "height": 250,
+      "id": "gpr-card",
+      "styleAttributes": {
+      },
+      "text": "범용 레지스터\n(General Purpose)",
+      "type": "text",
+      "width": 580,
+      "x": -1630,
+      "y": 3360
+    },
+    {
+      "color": "#cc99ff",
+      "file": "링크/컴퓨터구조/컴퓨터부품/SystemBus내부/메모리 읽기쓰기.md",
+      "height": 850,
+      "id": "memory-rw",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -1505,
+      "y": 1990
+    },
+    {
+      "color": "#ffcccc",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/ALU.md",
+      "height": 850,
+      "id": "alu-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 1130,
+      "x": -4200,
+      "y": 850
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU.md",
+      "height": 850,
+      "id": "cpu-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -920,
+      "y": 250
+    },
+    {
+      "color": "#9999ff",
+      "file": "링크/컴퓨터구조/컴퓨터부품/SystemBus내부/주소 버스.md",
+      "height": 850,
+      "id": "address-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -300,
+      "y": 2840
+    },
+    {
+      "color": "#9999ff",
+      "file": "링크/컴퓨터구조/컴퓨터부품/SystemBus내부/제어 버스.md",
+      "height": 850,
+      "id": "control-bus-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": 1400,
+      "y": 2840
+    },
+    {
+      "color": "#ff9999",
+      "height": 250,
+      "id": "pc-card",
+      "styleAttributes": {
+      },
+      "text": "PC\n(Program Counter)",
+      "type": "text",
+      "width": 580,
+      "x": -4350,
+      "y": 3360
+    },
+    {
+      "color": "#ffcccc",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/레지스터종류/명령어 실행과 레지스터.md",
+      "height": 850,
+      "id": "register-cycle",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -6280,
+      "y": 3360
+    },
+    {
+      "color": "#99ccff",
+      "height": 350,
+      "id": "io-card",
+      "styleAttributes": {
+      },
+      "text": "I/O Device\n(입출력장치)",
+      "type": "text",
+      "width": 200,
+      "x": 1500,
+      "y": 500
+    },
+    {
+      "color": "#ffff99",
+      "height": 200,
+      "id": "storage-card",
+      "styleAttributes": {
+      },
+      "text": "Storage\n(보조기억장치)",
+      "type": "text",
+      "width": 200,
+      "x": 1500,
+      "y": 100
+    },
+    {
+      "color": "#ff9999",
+      "height": 250,
+      "id": "ir-card",
+      "styleAttributes": {
+      },
+      "text": "IR\n(Instruction Register)",
+      "type": "text",
+      "width": 580,
+      "x": -3670,
+      "y": 3360
+    },
+    {
+      "color": "#ff9999",
+      "height": 300,
+      "id": "cpu-card",
+      "styleAttributes": {
+      },
+      "text": "CPU\n(중앙처리장치)",
+      "type": "text",
+      "width": 250,
+      "x": 50,
+      "y": 525
+    },
+    {
+      "color": "#ff9999",
+      "height": 350,
+      "id": "ram-card",
+      "styleAttributes": {
+      },
+      "text": "RAM\n(주기억장치)",
+      "type": "text",
+      "width": 250,
+      "x": 50,
+      "y": 75
+    },
+    {
+      "color": "#cc99ff",
+      "height": 300,
+      "id": "bus-card",
+      "styleAttributes": {
+      },
+      "text": "System Bus\n(시스템 버스)",
+      "type": "text",
+      "width": 150,
+      "x": 800,
+      "y": 300
+    },
+    {
+      "color": "#ffcccc",
+      "height": 150,
+      "id": "control-card",
+      "styleAttributes": {
+      },
+      "text": "제어장치",
+      "type": "text",
+      "width": 1470,
+      "x": -3950,
+      "y": 50
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/메모리계층구조/세그먼테이션.md",
+      "height": 850,
+      "id": "segmentation-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 1155,
+      "x": 1291,
+      "y": -3322
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/페이징.md",
+      "height": 920,
+      "id": "paging-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 978,
+      "x": 1316,
+      "y": -4619
+    },
+    {
+      "color": "#cc99ff",
+      "file": "링크/컴퓨터구조/컴퓨터부품/System Bus.md",
+      "height": 850,
+      "id": "bus-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 500,
+      "y": 1120
+    },
+    {
+      "color": "#99ccff",
+      "file": "링크/컴퓨터구조/컴퓨터부품/IO Device.md",
+      "height": 850,
+      "id": "io-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 450,
+      "x": 1535,
+      "y": 1120
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/물리 메모리의 한계.md",
+      "height": 965,
+      "id": "physical-limit-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -1600,
+      "y": -5337
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/가상 메모리.md",
+      "height": 850,
+      "id": "virtual-memory-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -160,
+      "y": -5279
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/메모리계층구조/메모리 할당 기법.md",
+      "height": 1040,
+      "id": "memory-allocation-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -265,
+      "y": -4135
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/RAM.md",
+      "height": 850,
+      "id": "ram-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 450,
+      "x": -10,
+      "y": -2775
+    },
+    {
+      "color": "#ffcccc",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/제어장치.md",
+      "height": 850,
+      "id": "control-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": -3590,
+      "y": -1025
+    },
+    {
+      "color": "#ffcccc",
+      "height": 300,
+      "id": "alu-card",
+      "styleAttributes": {
+      },
+      "text": "ALU\n(산술논리장치)",
+      "type": "text",
+      "width": 630,
+      "x": -3950,
+      "y": 250
+    },
+    {
+      "color": "#ffcccc",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/명령어실행사이클/Fetch.md",
+      "height": 850,
+      "id": "fetch-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 1025,
+      "x": -7835,
+      "y": -120
+    },
+    {
+      "color": "#ffcccc",
+      "height": 250,
+      "id": "execute-card",
+      "styleAttributes": {
+      },
+      "text": "3. Execute\n(실행)",
+      "type": "text",
+      "width": 500,
+      "x": -6210,
+      "y": -700
+    },
+    {
+      "color": "#ffcccc",
+      "height": 250,
+      "id": "decode-card",
+      "styleAttributes": {
+      },
+      "text": "2. Decode\n(해석)",
+      "type": "text",
+      "width": 500,
+      "x": -6760,
+      "y": -700
+    },
+    {
+      "color": "#99ff99",
+      "file": "링크/컴퓨터구조/메모리계층구조/캐시.md",
+      "height": 850,
+      "id": "cache-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 995,
+      "x": 1805,
+      "y": -960
+    },
+    {
+      "color": "#ffff99",
+      "file": "링크/컴퓨터구조/컴퓨터부품/Storage.md",
+      "height": 945,
+      "id": "storage-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": 1920,
+      "y": -15
+    },
+    {
+      "color": "#99ff99",
+      "file": "링크/컴퓨터구조/메모리계층구조/메모리 계층 구조.md",
+      "height": 1200,
+      "id": "memory-hierarchy-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 640,
+      "y": -1520
+    },
+    {
+      "color": "#99ff99",
+      "file": "링크/컴퓨터구조/메모리계층구조/지역성 원리.md",
+      "height": 850,
+      "id": "locality-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 1823,
+      "y": -2080
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/명령어실행사이클/명령어 실행 사이클.md",
+      "height": 850,
+      "id": "cycle-overview",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -5160,
+      "y": -1025
+    },
+    {
+      "color": "#ffcccc",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/명령어실행사이클/Execute.md",
+      "height": 850,
+      "id": "execute-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -5700,
+      "y": -120
+    },
+    {
+      "color": "#ffcccc",
+      "height": 250,
+      "id": "fetch-card",
+      "styleAttributes": {
+      },
+      "text": "1. Fetch\n(인출)",
+      "type": "text",
+      "width": 500,
+      "x": -7310,
+      "y": -700
+    },
+    {
+      "color": "#ffcccc",
+      "file": "링크/컴퓨터구조/컴퓨터부품/CPU내부/명령어실행사이클/Decode.md",
+      "height": 850,
+      "id": "decode-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": -6735,
+      "y": -120
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/페이지 폴트.md",
+      "height": 850,
+      "id": "page-fault-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 3200,
+      "y": -5704
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/스왑.md",
+      "height": 850,
+      "id": "swap-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 750,
+      "x": 4350,
+      "y": -5704
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/TLB.md",
+      "height": 850,
+      "id": "tlb-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 4350,
+      "y": -4679
+    },
+    {
+      "color": "#ff9999",
+      "file": "링크/컴퓨터구조/메모리계층구조/메모리 단편화.md",
+      "height": 1322,
+      "id": "fragmentation-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 3200,
+      "y": -3558
+    },
+    {
+      "color": "#66ccff",
+      "file": "링크/컴퓨터구조/메모리계층구조/가상메모리/페이지 테이블.md",
+      "height": 850,
+      "id": "page-table-desc",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 960,
+      "x": 3200,
+      "y": -4679
+    }
+  ]
+}
