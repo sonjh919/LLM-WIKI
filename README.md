@@ -1,6 +1,6 @@
 # LLM WIKI
 
-[Karpathy의 LLM Wiki 패턴](https://github.com/karpathy/LLM-Wiki)을 기반으로 한 **AI를 위한 세컨드 브레인**.
+[Karpathy의 LLM Wiki 패턴](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)을 기반으로 한 **AI를 위한 세컨드 브레인**.
 
 세상에 있는 유용한 정보와 지식을 체계적으로 모으고, 나의 맥락에 맞게 정리·연결해서, AI가 이를 읽고 활용할 수 있게 만드는 개인 지식 베이스입니다.
 
@@ -39,8 +39,8 @@ LLM WIKI/
 
 이 위키를 운영하기 위한 Claude Code 스킬은 별도 레포에서 관리합니다:
 
-[sonjh919/LLM-Wiki-Skills](https://github.com/sonjh919/LLM-Wiki-Skills) — `/ingest`, `/query`, `/lint`, `/improve`
+[sonjh919/LLM-Wiki-Skills](https://github.com/sonjh919/LLM-Wiki-Skills)
 
 ## 라이선스
 
-[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — 자유롭게 사용·수정 가능, 상업적 사용 불가
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
