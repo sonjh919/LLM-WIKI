@@ -1,0 +1,179 @@
+{
+  "edges": [
+    {
+      "color": "#cc99ff",
+      "fromNode": "cpu",
+      "fromSide": "right",
+      "id": "cpu-to-bus",
+      "label": "명령어/데이터",
+      "toNode": "bus",
+      "toSide": "left"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "ram",
+      "fromSide": "right",
+      "id": "ram-to-bus",
+      "label": "데이터 저장/적재",
+      "toNode": "bus",
+      "toSide": "left"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "bus",
+      "fromSide": "right",
+      "id": "bus-to-storage",
+      "label": "프로그램 로드",
+      "toNode": "storage",
+      "toSide": "left"
+    },
+    {
+      "color": "#cc99ff",
+      "fromNode": "bus",
+      "fromSide": "right",
+      "id": "bus-to-io",
+      "label": "입출력",
+      "toNode": "io",
+      "toSide": "left"
+    },
+    {
+      "color": "#ff9999",
+      "fromNode": "cpu",
+      "fromSide": "bottom",
+      "id": "cpu-ram",
+      "label": "CPU는 RAM의 데이터만 처리",
+      "toNode": "ram",
+      "toSide": "top"
+    },
+    {
+      "color": "#ffff99",
+      "fromNode": "ram",
+      "fromSide": "right",
+      "id": "ram-storage",
+      "label": "Storage → RAM 적재",
+      "toNode": "storage",
+      "toSide": "left"
+    }
+  ],
+  "nodes": [
+    {
+      "color": "#e0e0e0",
+      "height": 700,
+      "id": "mainboard",
+      "label": "메인보드",
+      "styleAttributes": {
+      },
+      "type": "group",
+      "width": 1400,
+      "x": -300,
+      "y": -180
+    },
+    {
+      "height": 675,
+      "id": "4582d5dc7e1b9410",
+      "isStartNode": true,
+      "label": "Start Slide",
+      "sideRatio": 1.7777777777777777,
+      "type": "group",
+      "width": 1200,
+      "x": -300,
+      "y": -80
+    },
+    {
+      "color": "#e0e0e0",
+      "height": 160,
+      "id": "title",
+      "styleAttributes": {
+      },
+      "text": "# 컴퓨터부품 전체 조감도\n\n컴퓨터의 5대 핵심 부품과 그 관계.\nSystem Bus가 모든 부품을 하나의 통로로 연결한다.",
+      "type": "text",
+      "width": 600,
+      "x": -200,
+      "y": -400
+    },
+    {
+      "color": "#ff9999",
+      "file": "wiki/CPU.md",
+      "height": 200,
+      "id": "cpu",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 400,
+      "x": -200,
+      "y": 0
+    },
+    {
+      "color": "#ff9999",
+      "file": "wiki/RAM.md",
+      "height": 200,
+      "id": "ram",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 400,
+      "x": -200,
+      "y": 260
+    },
+    {
+      "color": "#cc99ff",
+      "file": "wiki/System Bus.md",
+      "height": 200,
+      "id": "bus",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 300,
+      "x": 400,
+      "y": 130
+    },
+    {
+      "color": "#ffff99",
+      "file": "wiki/Storage.md",
+      "height": 200,
+      "id": "storage",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 250,
+      "x": 800,
+      "y": 0
+    },
+    {
+      "color": "#99ccff",
+      "file": "wiki/IO Device.md",
+      "height": 200,
+      "id": "io",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 250,
+      "x": 800,
+      "y": 260
+    },
+    {
+      "color": "#ccffcc",
+      "height": 250,
+      "id": "backend-note",
+      "styleAttributes": {
+      },
+      "text": "## 백엔드 개발자 관점\n\n- **CPU**: 스레드 풀 사이징, CPU바운드 vs I/O바운드\n- **RAM**: JVM 힙, OOM, 인메모리 캐시\n- **Storage**: DB I/O, 디스크 병목, EBS 선택\n- **I/O Device**: 네트워크 I/O, NIO, 멀티플렉싱\n- **System Bus**: DMA, 메모리 맵드 I/O",
+      "type": "text",
+      "width": 600,
+      "x": -200,
+      "y": 580
+    },
+    {
+      "color": "#ffffcc",
+      "height": 200,
+      "id": "next-stage",
+      "styleAttributes": {
+      },
+      "text": "## 다음 단계 (미진행)\n\n- **CPU 내부**: 제어장치, ALU, 레지스터\n- **System Bus 내부**: 주소/데이터/제어 버스\n- **메모리 계층구조**: 캐시, 가상 메모리",
+      "type": "text",
+      "width": 500,
+      "x": 500,
+      "y": 580
+    }
+  ]
+}
