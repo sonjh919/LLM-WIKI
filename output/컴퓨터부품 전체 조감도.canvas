@@ -74,6 +74,8 @@
       "isStartNode": true,
       "label": "Start Slide",
       "sideRatio": 1.7777777777777777,
+      "styleAttributes": {
+      },
       "type": "group",
       "width": 1200,
       "x": -300,

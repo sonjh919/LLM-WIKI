@@ -6,9 +6,11 @@
 - `notes/` — 과거 학습 정리본 (기존 볼트에서 가져온 것, 주제별 하위 폴더). 형식이 다양할 수 있으므로 ingest 시 개별 판단 필요
 - `docs/` — 공식 문서, 아티클, 블로그 등 외부 자료
 - `media/` — 유튜브 등 영상 자료 (메모, 요약)
+- `reviews/` — GitHub PR 코드리뷰 (PR 본문 + 리뷰 코멘트 + diff). 판단 기준·트레이드오프 학습용. `scripts/fetch-pr-review.sh <PR-URL>`로 추가
 - `assets/` — 이미지, 다이어그램 등 첨부파일
 
 ## 규칙
 - 원본은 수집된 그대로 유지한다
 - 파일명 형식: `YYYY-MM-DD_제목.md`
 - 출처 URL이 있으면 파일 상단에 YAML frontmatter로 기록한다
+- frontmatter에 `ingested: true/false` 플래그로 wiki/ 반영 여부를 추적한다 — ingest 완료 시 `true`로 변경

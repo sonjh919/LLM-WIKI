@@ -1,0 +1,68 @@
+{
+	"schemaVersion": "0.1.0",
+	"name": "GitHub PR 리뷰",
+	"behavior": "create",
+	"noteContentFormat": "## PR 본문 및 리뷰\n\n{{content}}",
+	"properties": [
+		{
+			"name": "source_type",
+			"value": "github-pr",
+			"type": "text"
+		},
+		{
+			"name": "title",
+			"value": "{{title}}",
+			"type": "text"
+		},
+		{
+			"name": "source",
+			"value": "{{url}}",
+			"type": "text"
+		},
+		{
+			"name": "author",
+			"value": "{{author}}",
+			"type": "text"
+		},
+		{
+			"name": "reviewer",
+			"value": "",
+			"type": "multitext"
+		},
+		{
+			"name": "repo",
+			"value": "",
+			"type": "text"
+		},
+		{
+			"name": "merged",
+			"value": "",
+			"type": "text"
+		},
+		{
+			"name": "topic",
+			"value": "",
+			"type": "text"
+		},
+		{
+			"name": "created",
+			"value": "{{date}}",
+			"type": "date"
+		},
+		{
+			"name": "tags",
+			"value": "raw/reviews",
+			"type": "multitext"
+		},
+		{
+			"name": "ingested",
+			"value": "false",
+			"type": "text"
+		}
+	],
+	"triggers": [
+		"https://github.com/*/*/pull/*"
+	],
+	"noteNameFormat": "{{date:YYYY-MM-DD}}_{{title}}",
+	"path": "raw/reviews"
+}

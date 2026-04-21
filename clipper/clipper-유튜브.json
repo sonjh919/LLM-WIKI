@@ -1,0 +1,56 @@
+{
+	"schemaVersion": "0.1.0",
+	"name": "유튜브 영상",
+	"behavior": "create",
+	"noteContentFormat": "## 영상 내용\n\n{{content}}",
+	"properties": [
+		{
+			"name": "source_type",
+			"value": "youtube",
+			"type": "text"
+		},
+		{
+			"name": "title",
+			"value": "{{title}}",
+			"type": "text"
+		},
+		{
+			"name": "source",
+			"value": "{{url}}",
+			"type": "text"
+		},
+		{
+			"name": "author",
+			"value": "{{author}}",
+			"type": "text"
+		},
+		{
+			"name": "published",
+			"value": "{{published}}",
+			"type": "date"
+		},
+		{
+			"name": "topic",
+			"value": "",
+			"type": "text"
+		},
+		{
+			"name": "created",
+			"value": "{{date}}",
+			"type": "date"
+		},
+		{
+			"name": "tags",
+			"value": "raw/media",
+			"type": "multitext"
+		},
+		{
+			"name": "ingested",
+			"value": "false",
+			"type": "text"
+		}
+	],
+	"triggers": [],
+	"noteNameFormat": "{{date:YYYY-MM-DD}}_{{title}}",
+	"path": "raw/media"
+}
