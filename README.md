@@ -19,6 +19,7 @@ LLM WIKI/
 │   ├── notes/      # 과거 학습 정리본
 │   ├── docs/       # 공식 문서, 아티클, 블로그
 │   ├── media/      # 유튜브 등 영상 자료
+│   ├── reviews/    # GitHub PR 코드리뷰 (판단 기준·트레이드오프 학습용)
 │   └── assets/     # 이미지, 다이어그램
 ├── wiki/           # AI가 관리하는 위키
 │   ├── index.md    # 전체 목차
@@ -34,12 +35,14 @@ LLM WIKI/
 | **Query** | wiki/ 문서를 근거로 질문에 답변 |
 | **Lint** | 깨진 링크, 모순, 누락 등 위키 전체 점검 |
 | **Improve** | 학습 패턴 분석 → 개선 방안 제안 |
+| **Promote** | 여러 소스(N=2~3)에서 반복된 원칙을 독립 페이지로 승격 (예: `summary_PR_*` → `review_*`) |
+| **Reflect** | 대화에서 반복 신호를 추출해 CLAUDE.md·메모리·페이지 중 적절한 레이어로 동기화 |
 
 ## 스킬
 
 이 위키를 운영하기 위한 Claude Code 스킬은 별도 레포에서 관리합니다:
 
-[sonjh919/LLM-Wiki-Skills](https://github.com/sonjh919/LLM-Wiki-Skills)
+[sonjh919/LLM-Wiki-Skills](https://github.com/sonjh919/LLM-Wiki-Skills) — `/ingest`, `/query`, `/lint`, `/improve`, `/review`
 
 ## 라이선스
 
