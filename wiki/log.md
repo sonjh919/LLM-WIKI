@@ -1,6 +1,6 @@
 ---
 description: 위키 작업 이력. 시간순 append-only.
-updated: 2026-04-21
+updated: 2026-04-22
 ---
 
 # Log
@@ -129,6 +129,25 @@ updated: 2026-04-21
 - wiki/CLAUDE.md: 리뷰 페이지 프레임워크 확장 ("반론과 답 → 학습 노트" 섹션 공식화)
 - raw/CLAUDE.md: `ingested: true/false` 플래그 규칙 명시
 - output/CLAUDE.md: **시각화 적용 기준** 신설 (공간적·물리적 관계 주제에만, 개념 연관은 graph view로 충분)
+
+## [2026-04-22] infra | 소크라테스식 문답 학습 모드 명문화
+- CLAUDE.md "학습자" 역할에 선호 학습 방식 한 줄 추가
+- CLAUDE.md "AI에게 기대하는 것"에 3단계 스캐폴딩·탈출구 규칙 추가
+- CLAUDE.md "Query" 섹션에 학습 모드 분기 추가 (기존 페이지 복습 = 질문-only, 서브 질문은 세션 내 소비)
+- "나의 핵심 맥락.md"의 AI 역할에 선호 문구 반영
+
+## [2026-04-22] query | CPU 소크라테스식 복습
+- 기존 wiki/CPU.md를 질문-only 모드로 복습
+- 드러난 빈틈: **레지스터 vs 캐시 혼동**, **코어 개념** 명시적 부재, **컨텍스트 스위칭** 명시적 부재
+- wiki/CPU.md 보강: "코어와 멀티코어" 섹션 신설, 백엔드 섹션을 CPU/I/O 바운드 표로 재구성
+- 신규: output/learning_CPU_2026-04-22.md (학습 여정 노트 — 새 output 유형 N=1 실험)
+- 소크라테스식 문답 효과 검증: 수동 읽기로는 드러나지 않았을 빈틈이 질문으로 드러남
+
+## [2026-04-22] ingest | 컨텍스트 스위칭 페이지 분리
+- CPU.md에 섹션으로 넣었던 컨텍스트 스위칭을 독립 페이지(wiki/컨텍스트 스위칭.md)로 분리
+- 판단 근거: CPU와 OS의 교차점 개념이라 향후 스레드·프로세스·OS 스케줄링 페이지에서도 참조 예상. 코어 개념은 CPU의 확장 축이라 CPU.md 섹션 유지
+- index.md 새 서브섹션 "컴퓨터구조 — 실행 모델" 신설 (향후 스레드·프로세스 등 확장 지점)
+- CPU.md는 "관련 개념" 섹션에 wikilink로 역참조
 
 ## [2026-04-21] infra | CLAUDE.md Reflect 프로세스 신설
 - 메인 CLAUDE.md 위키 운영 규칙에 **Reflect** 추가 (Ingest/Query/Lint/Promote와 동급)
