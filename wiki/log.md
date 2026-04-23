@@ -1,6 +1,6 @@
 ---
 description: 위키 작업 이력. 시간순 append-only.
-updated: 2026-04-23 (System Bus 복습)
+updated: 2026-04-23 (IO Device 복습 + 학습 후보 백로그 + Branch 프로세스 + 컴퓨터부품 요청 흐름 분리)
 ---
 
 # Log
@@ -187,3 +187,33 @@ updated: 2026-04-23 (System Bus 복습)
 - DMA.md 구성: PIO 방식의 문제 → DMA 컨트롤러·버스 마스터 권한 → zero-copy/sendfile()·Netty NIO 활용 → Direct Buffer 연결
 - System Bus.md의 DMA 언급은 한 단락으로 축약하고 [[DMA]] 링크로 이관
 - **패턴 반복 N=3**: CPU→컨텍스트 스위칭, RAM→JVM 메모리 구조, System Bus→DMA. 같은 분리 기준("다른 맥락 참조 가능성") 3회 적용 — **CLAUDE.md 규칙 승격 후보**
+
+## [2026-04-23] query | Storage 복습
+- 기존 wiki/Storage.md를 질문-only 모드로 복습
+- 매끄럽게: 휘발성·용량·비용 대비 관점 완벽, HDD 임의 접근 느린 이유 정확 설명
+- 빈틈: SSD 내부 원리(비휘발성 유지 메커니즘의 속도 비용), DB 버퍼 풀 개념 미정착, 로그 I/O·IOPS 개념 미학습
+- 본인 메타 질문: "SSD가 전자식이면 RAM과 같은 알고리즘이라 빠른가?", "DB쪽을 더 파보고 싶은데 지금 하긴 결이 다르지?" → **DB 학습 후보 발의로 이어짐**
+- 학습 노트 별도 생성 X (IO Device와 같은 날 연속 세션, 컴퓨터부품 마무리 맥락에서 IO Device 노트에 통합적 회고)
+
+## [2026-04-23] query | IO Device 복습 — 컴퓨터부품 5종 마무리
+- 기존 wiki/IO Device.md를 질문-only 모드로 복습
+- 매끄럽게: 3분류·NIC 중심성 즉시 답, **Thread-per-Connection 한계에 JVM 메모리·컨텍스트 스위칭·스레드 풀 동시 소환** — 이전 4개 세션 개념이 한 질문에 전부 엮임
+- 빈틈: I/O 멀티플렉싱 명칭("이벤트 루프?"로 방향만), 소켓 개념 자기 인식으로 후보 분리, 5대 부품 조감도 시작점 못 잡음
+- 본인 메타 제안: **"학습 후보 백로그"** 인프라 발의 — 개별 개념 학습을 넘어 학습 시스템 자체 진화 신호
+- wiki/IO Device.md 대폭 보강: Thread-per-Connection vs I/O 멀티플렉싱 대조, 5대 부품 HTTP 요청 흐름 조감도, DMA·컨텍스트 스위칭·JVM 메모리 wikilink 강화
+- 신규: output/learning_IO Device_2026-04-23.md (N=4, 4단 포맷 연속 4회 유효 — **스킬화 판단 가능 시점**)
+
+## [2026-04-23] infra | 학습 후보 백로그 + Branch 프로세스 신설
+- 신규: output/학습_후보.md — IO Device 세션에서 사용자 본인이 발의한 메타 인프라
+- 구조: 카테고리(DB·네트워크·JVM·성능·인프라·학습법)별 분류, 신호 강도(반복 등장 횟수), 상태(후보/진행중/완료)
+- Backfill: 5개 학습 세션(CPU·RAM·System Bus·Storage·IO Device) + 요약·리뷰 페이지에서 후보 17건 수집
+- CLAUDE.md에 **Branch (학습 후보 관리)** 프로세스 추가 — Ingest/Query/Lint/Promote/Reflect와 동급 (Query 바로 뒤 배치)
+- 완료 섹션에 승격 역사 기록: 컨텍스트 스위칭·JVM 메모리 구조·DMA
+- 활용 계획: 시각화에서 파생 맥락 표현, 다음 학습 대상 우선순위 결정, 반복 등장 주제 식별
+
+## [2026-04-23] promote | 컴퓨터부품 요청 흐름 페이지 분리 (종합 페이지, prefix 생략)
+- IO Device.md에 들어있던 "5대 부품 요청 흐름 조감도" 섹션을 wiki/컴퓨터부품 요청 흐름.md로 분리
+- 판단 근거(Promote 패턴 확장): 기존은 "하위 개념 분리"만 있었음. 이번은 **여러 부품을 엮는 상위 종합 지도**라 IO Device 스코프에서 벗어남 → 종합 페이지(overview) 유형으로 승격
+- 5대 부품 전 페이지(CPU·RAM·Storage·System Bus·IO Device)의 frontmatter `related:`에 역링크 추가. CPU·IO Device의 "관련 개념" 섹션에도 불릿 추가
+- **파일명 prefix 정책 변경**: wiki/CLAUDE.md에 "제목으로 유형이 명확하면 prefix 생략 가능" 규칙 신설. `overview_` 강제 붙이지 않고 `컴퓨터부품 요청 흐름.md`로 명명 (한글 제목 자연스러움 우선)
+- index.md의 컴퓨터부품 서브섹션 최상단에 종합 지도로 배치
