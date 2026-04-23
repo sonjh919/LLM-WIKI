@@ -1,6 +1,6 @@
 ---
 description: 위키 전체 목차. AI가 쿼리 시 가장 먼저 읽는 파일.
-updated: 2026-04-22
+updated: 2026-04-23
 
 ---
 
@@ -15,10 +15,11 @@ updated: 2026-04-22
 - [[RAM]] — 현재 실행 중인 데이터의 임시 저장. 속도 계층·동시 요청과 RAM 소비·인메모리 캐시
 - [[Storage]] — 데이터를 영구적으로 보관하는 보조기억장치 (HDD, SSD)
 - [[IO Device]] — 컴퓨터 내부와 외부를 연결하는 입출력 장치
-- [[System Bus]] — CPU, RAM, I/O 장치를 연결하는 공유 통신 통로
+- [[System Bus]] — CPU, RAM, I/O 장치를 연결하는 공유 통신 통로. 3종 버스(주소·데이터·제어)·다층 버스·병목 구분
 
 ### 컴퓨터구조 — 실행 모델
 - [[컨텍스트 스위칭]] — 코어보다 스레드가 많을 때 OS가 스레드를 번갈아 실행하는 방식. 컨텍스트 = 레지스터 값 스냅샷
+- [[DMA]] — IO 장치가 CPU 없이 RAM과 직접 데이터를 주고받는 메커니즘. zero-copy·Netty·Direct Buffer 배경
 
 ### Java / JVM
 - [[JVM 메모리 구조]] — JVM이 OS에서 받은 RAM을 Heap·Stack·메서드 영역으로 쪼개 쓰는 구조. OOM 시나리오·스레드 Stack 포함
@@ -42,3 +43,4 @@ updated: 2026-04-22
 - `output/컴퓨터부품 인포그래픽.html` — 컴퓨터부품 인터랙티브 인포그래픽 (실험)
 - `output/learning_CPU_2026-04-22.md` — CPU 소크라테스식 복습 여정 (막혔던 지점·깨달음 기록)
 - `output/learning_RAM_2026-04-22.md` — RAM 소크라테스식 복습 여정 (속도 계층·JVM 메모리·스레드 연결)
+- `output/learning_System Bus_2026-04-23.md` — System Bus 소크라테스식 복습 여정 (3종 버스 분리 이유·DMA·버스 병목 vs IO 바운드)
