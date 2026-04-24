@@ -1,0 +1,397 @@
+{
+  "edges": [
+    {
+      "color": "#aaccff",
+      "fromNode": "part-cpu",
+      "fromSide": "right",
+      "id": "e-cpu-bus",
+      "toNode": "part-bus",
+      "toSide": "left"
+    },
+    {
+      "color": "#aaccff",
+      "fromNode": "part-ram",
+      "fromSide": "right",
+      "id": "e-ram-bus",
+      "toNode": "part-bus",
+      "toSide": "left"
+    },
+    {
+      "color": "#aaccff",
+      "fromNode": "part-bus",
+      "fromSide": "right",
+      "id": "e-bus-io",
+      "toNode": "part-io",
+      "toSide": "left"
+    },
+    {
+      "color": "#aaccff",
+      "fromNode": "part-bus",
+      "fromSide": "right",
+      "id": "e-bus-storage",
+      "toNode": "part-storage",
+      "toSide": "left"
+    },
+    {
+      "color": "#66bb66",
+      "fromNode": "part-cpu",
+      "fromSide": "bottom",
+      "id": "e-cpu-ctx",
+      "label": "N=1 세션에서 파생",
+      "toNode": "anchor-ctx",
+      "toSide": "top"
+    },
+    {
+      "color": "#66bb66",
+      "fromNode": "part-ram",
+      "fromSide": "bottom",
+      "id": "e-ram-jvm",
+      "label": "N=2 세션에서 파생",
+      "toNode": "anchor-jvm",
+      "toSide": "top"
+    },
+    {
+      "color": "#66bb66",
+      "fromNode": "part-bus",
+      "fromSide": "bottom",
+      "id": "e-bus-dma",
+      "label": "N=3 세션에서 파생",
+      "toNode": "anchor-dma",
+      "toSide": "top"
+    },
+    {
+      "color": "#dbac34",
+      "fromNode": "session-n1",
+      "fromSide": "top",
+      "id": "e-n1-ctx",
+      "label": "돌파",
+      "toNode": "anchor-ctx",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#dbac34",
+      "fromNode": "session-n2",
+      "fromSide": "top",
+      "id": "e-n2-jvm",
+      "label": "메타 Q→돌파",
+      "toNode": "anchor-jvm",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#dbac34",
+      "fromNode": "session-n3",
+      "fromSide": "top",
+      "id": "e-n3-dma",
+      "label": "메타 Q→돌파",
+      "toNode": "anchor-dma",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#cccccc",
+      "fromNode": "session-n1",
+      "fromSide": "right",
+      "id": "e-n1-n2",
+      "label": "시간",
+      "toNode": "session-n2",
+      "toSide": "left"
+    },
+    {
+      "color": "#cccccc",
+      "fromNode": "session-n2",
+      "fromSide": "right",
+      "id": "e-n2-n3",
+      "toNode": "session-n3",
+      "toSide": "left"
+    },
+    {
+      "color": "#cccccc",
+      "fromNode": "session-n3",
+      "fromSide": "right",
+      "id": "e-n3-storage",
+      "toNode": "session-storage",
+      "toSide": "left"
+    },
+    {
+      "color": "#cccccc",
+      "fromNode": "session-storage",
+      "fromSide": "right",
+      "id": "e-storage-n4",
+      "toNode": "session-n4",
+      "toSide": "left"
+    },
+    {
+      "color": "#ff7744",
+      "fromNode": "session-n4",
+      "fromSide": "top",
+      "id": "e-n4-ctx",
+      "label": "N=4에서 개념 소환",
+      "toNode": "anchor-ctx",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#ff7744",
+      "fromNode": "session-n4",
+      "fromSide": "top",
+      "id": "e-n4-jvm",
+      "label": "N=4에서 개념 소환",
+      "toNode": "anchor-jvm",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#ff7744",
+      "fromNode": "session-n4",
+      "fromSide": "top",
+      "id": "e-n4-dma",
+      "label": "N=4에서 개념 소환",
+      "toNode": "anchor-dma",
+      "toSide": "bottom"
+    },
+    {
+      "color": "#cc66cc",
+      "fromNode": "session-storage",
+      "fromSide": "bottom",
+      "id": "e-storage-backlog",
+      "label": "DB 후보 발의",
+      "toNode": "backlog-summary",
+      "toSide": "top"
+    },
+    {
+      "color": "#cc66cc",
+      "fromNode": "session-n4",
+      "fromSide": "bottom",
+      "id": "e-n4-backlog",
+      "label": "Branch 프로세스 발의",
+      "toNode": "backlog-summary",
+      "toSide": "top"
+    },
+    {
+      "color": "#3388ff",
+      "fromNode": "session-n4",
+      "fromSide": "top",
+      "id": "e-n4-flow",
+      "label": "N=4에서 조감도 탄생",
+      "toNode": "flow-overview",
+      "toSide": "bottom"
+    }
+  ],
+  "metadata": {
+  },
+  "nodes": [
+    {
+      "color": "#e0e0e0",
+      "height": 180,
+      "id": "title",
+      "styleAttributes": {
+      },
+      "text": "# 컴퓨터구조 학습 여정\n\n**객관 구조 (상단)** × **학습 궤적 (하단)**\n\n세션 메타 질문에서 파생된 개념이 구조 레이어의 앵커가 된다.",
+      "type": "text",
+      "width": 700,
+      "x": -900,
+      "y": -1580
+    },
+    {
+      "color": "#e0e0e0",
+      "height": 200,
+      "id": "legend",
+      "styleAttributes": {
+      },
+      "text": "## 범례\n\n🔵 **객관 부품** — 5대 부품 (wiki 페이지)\n🟢 **승격 개념** — 세션에서 분리된 독립 페이지 (양 레이어 앵커)\n🟡 **학습 세션** — learning 노트\n🟣 **학습 후보** — Branch 백로그 (아직 안 간 길)\n\n📐 화살표 라벨은 \"언제·왜\" 연결되는지 표시",
+      "type": "text",
+      "width": 560,
+      "x": -150,
+      "y": -1580
+    },
+    {
+      "color": "#aaccff",
+      "file": "wiki/CPU.md",
+      "height": 110,
+      "id": "part-cpu",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": -900,
+      "y": -1320
+    },
+    {
+      "color": "#aaccff",
+      "file": "wiki/RAM.md",
+      "height": 110,
+      "id": "part-ram",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": -560,
+      "y": -1320
+    },
+    {
+      "color": "#aaccff",
+      "file": "wiki/System Bus.md",
+      "height": 110,
+      "id": "part-bus",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": -220,
+      "y": -1320
+    },
+    {
+      "color": "#aaccff",
+      "file": "wiki/IO Device.md",
+      "height": 110,
+      "id": "part-io",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": 120,
+      "y": -1320
+    },
+    {
+      "color": "#aaccff",
+      "file": "wiki/Storage.md",
+      "height": 110,
+      "id": "part-storage",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": 460,
+      "y": -1320
+    },
+    {
+      "color": "#aaccff",
+      "file": "wiki/컴퓨터부품 요청 흐름.md",
+      "height": 140,
+      "id": "flow-overview",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 1620,
+      "x": -900,
+      "y": -1150
+    },
+    {
+      "color": "#aaddaa",
+      "file": "wiki/컨텍스트 스위칭.md",
+      "height": 110,
+      "id": "anchor-ctx",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": -900,
+      "y": -920
+    },
+    {
+      "color": "#aaddaa",
+      "file": "wiki/JVM 메모리 구조.md",
+      "height": 110,
+      "id": "anchor-jvm",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": -560,
+      "y": -920
+    },
+    {
+      "color": "#aaddaa",
+      "file": "wiki/DMA.md",
+      "height": 110,
+      "id": "anchor-dma",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 260,
+      "x": -220,
+      "y": -920
+    },
+    {
+      "color": "#ffe999",
+      "height": 480,
+      "id": "session-n1",
+      "styleAttributes": {
+      },
+      "text": "## N=1 CPU\n**2026-04-22**\n\n**본인 메타 Q**: (첫 세션, 기록 없음)\n\n**막힘 → 돌파**:\n- 레지스터 vs 캐시 혼동\n- 코어/멀티코어 부재\n- 컨텍스트 스위칭 부재\n\n**파생**: → [[컨텍스트 스위칭]]\n\n📎 [[learning_CPU_2026-04-22]]",
+      "type": "text",
+      "width": 320,
+      "x": -1080,
+      "y": -720
+    },
+    {
+      "color": "#ffe999",
+      "height": 480,
+      "id": "session-n2",
+      "styleAttributes": {
+      },
+      "text": "## N=2 RAM\n**2026-04-22**\n\n**본인 메타 Q**:\n- \"JVM이 RAM에 올라가?\"\n- \"Java Thread = OS Thread?\"\n\n**막힘 → 돌파**:\n- 속도 계층 감\n- 제어 버스 누락 (이미 본 개념!)\n- JVM 메서드 영역·공유\n- 스레드-Stack 연결\n\n**파생**: → [[JVM 메모리 구조]]\n\n📎 [[learning_RAM_2026-04-22]]",
+      "type": "text",
+      "width": 320,
+      "x": -740,
+      "y": -720
+    },
+    {
+      "color": "#ffe999",
+      "height": 480,
+      "id": "session-n3",
+      "styleAttributes": {
+      },
+      "text": "## N=3 System Bus\n**2026-04-23**\n\n**본인 메타 Q**:\n- \"제어 버스 왜 분리?\"\n- \"다른 장치끼리 이어지는 버스?\"\n\n**막힘 → 돌파**:\n- 스케일 혼동(ALU 내부 vs 부품 간)\n- 제어 버스 필요 장면\n- I/O 바운드 원인 오해\n\n**파생**: → [[DMA]]\n\n📎 [[learning_System Bus_2026-04-23]]",
+      "type": "text",
+      "width": 320,
+      "x": -400,
+      "y": -720
+    },
+    {
+      "color": "#ffe999",
+      "height": 480,
+      "id": "session-storage",
+      "styleAttributes": {
+      },
+      "text": "## Storage\n**2026-04-23** (노트 통합)\n\n**본인 메타 Q**:\n- \"SSD 전자식이면 RAM 알고리즘?\"\n- **\"DB를 더 파보고 싶다\"** ★\n\n**막힘 → 돌파**:\n- SSD 내부 메커니즘\n- DB 버퍼 풀 감\n- IOPS 개념\n\n**파생**: → 학습 후보(DB)\n\n📎 log.md 2026-04-23 참조",
+      "type": "text",
+      "width": 320,
+      "x": -60,
+      "y": -720
+    },
+    {
+      "color": "#ffe999",
+      "height": 480,
+      "id": "session-n4",
+      "styleAttributes": {
+      },
+      "text": "## N=4 IO Device\n**2026-04-23**\n\n**본인 메타 Q**:\n- **\"학습 후보 백로그?\"** ★ (메타 인프라)\n- \"소켓?\" (자기 인식)\n\n**막힘 → 돌파**:\n- I/O 멀티플렉싱 명칭\n- 5대 부품 조감도 시작점\n- 전 세션 개념 동시 소환 ✨\n\n**파생**: → [[컴퓨터부품 요청 흐름]]\n→ Branch 프로세스\n\n📎 [[learning_IO Device_2026-04-23]]",
+      "type": "text",
+      "width": 320,
+      "x": 280,
+      "y": -720
+    },
+    {
+      "color": "#ddaaff",
+      "file": "output/학습_후보.md",
+      "height": 200,
+      "id": "branch-backlog",
+      "styleAttributes": {
+      },
+      "type": "file",
+      "width": 1620,
+      "x": -900,
+      "y": -180
+    },
+    {
+      "color": "#ddaaff",
+      "height": 220,
+      "id": "backlog-summary",
+      "styleAttributes": {
+      },
+      "text": "## 학습 후보 백로그 (아직 가지 않은 길)\n\n**⭐⭐⭐ 최우선**: DB 전반 (인덱스·트랜잭션·버퍼 풀·EXPLAIN)\n**⭐⭐ 반복 등장**: Netty / Spring WebFlux / Redis·Memcached / 복습 감가상각\n**⭐ 단일 등장**: 소켓 / I/O 멀티플렉싱 상세 / zero-copy / GC / 가상 스레드 / IOPS / 비동기 로깅 / Canvas 시각화\n\n각 후보는 어느 세션·부품에서 파생됐는지 추적됨 → [[학습_후보]]",
+      "type": "text",
+      "width": 1620,
+      "x": -900,
+      "y": 60
+    }
+  ]
+}
