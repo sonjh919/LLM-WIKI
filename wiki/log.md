@@ -1,6 +1,6 @@
 ---
 description: 위키 작업 이력. 시간순 append-only.
-updated: 2026-04-28 (빌드업 폴더 분리 + PCB 미니맵 + 답 입력 비교 + 페이즈 점프)
+updated: 2026-04-29 (deprecated 결과물 3건 정리)
 ---
 
 # Log
@@ -225,6 +225,15 @@ updated: 2026-04-28 (빌드업 폴더 분리 + PCB 미니맵 + 답 입력 비교
 - 나의 핵심 맥락.md: 시각화 한 줄을 "복습 효율 → 장기기억 전이 필수 도구"로 강화
 - 인포그래픽 실험 기록.md: N=2 미스매치 발견(클릭 즉시 답 노출 → 능동 회상 무력) + 빌드업형 방향 결정 기록
 - 메모리: 새 방향 반영 (project_infographic_output.md)
+
+## [2026-04-29] cleanup | deprecated 결과물 3건 삭제
+- 삭제: output/인포그래픽 실험 기록.md (결정 history는 log.md에 충분히 기록되어 중복)
+- 삭제: output/컴퓨터구조 학습 여정.canvas (정적 시각화, 빌드업.html이 발전 형태로 대체)
+- 삭제: output/컴퓨터부품 인포그래픽.html (N=1 종합 조감형, 능동 회상 미강제 — 빌드업.html이 대체)
+- 보존: 컴퓨터부품 전체 조감도.canvas (정적 부품 연결 구조 — 다른 형태 결과물)
+- 보존: 컴퓨터구조 학습 여정.html (N=2 종합 조감형 — 추후 모드 토글 또는 빌드업 흡수 검토 후보)
+- references 갱신: wiki/index.md, output/CLAUDE.md (안티 패턴 예시 문구)
+- git history 보존 — 필요 시 복구 가능
 
 ## [2026-04-28] output | 빌드업 폴더 분리 + 가이드 CLAUDE.md
 - 신규: output/컴퓨터구조 빌드업/ 폴더 (도메인 + 형태별 결과물 묶음)
