@@ -265,19 +265,32 @@ P3+ 추가 시 같은 패턴으로 표 확장. 글로우는 각 부품의 첫 'c
 - [ ] 답 입력 전엔 시각 변화 X (능동 회상 강제 검증)
 - [ ] 페이즈 점프 시 글로우 발동 X (직전 부품 자동 completed 처리)
 
-## P4+ 확장 시 결정 지점 (실제 도달 시점에 답을 정함)
+## 확장 시 결정 사항
 
-부품 5개 이상으로 확장하면 다음 항목들에서 결정이 필요해진다. **추측하지 말고, P3 한 번 추가해본 뒤 실제 패턴을 보고 가이드에 반영**한다 (N=2~3 후 일반화).
+### P3 추가에서 답이 정해진 것 (N=1)
 
-- 미니맵 공간 부족 시: viewBox 가로 확장 vs 부품 크기 축소 vs 2층 배치
-- transition 명명: `transition2` / `transitionP2P3` / 기타 — 하나로 결정해 일관 유지
-- 부품 종류별 setMiniBox 변형 — 슬롯형(현재) vs 트레이스형(System Bus) vs 패널형(IO Device)
-- `connection` 구조 진화: 단일 boolean → 객체(`{cpuRam, ramStorage, ...}`) 또는 배열
-- 페이즈 인디케이터 가로 폭 도달 시: 한 줄 압축 명명 vs 두 줄 분할
-- `jumpToPhase(N)` 내 직전 부품들 일괄 'completed' 처리 루프 패턴
+- **transition 명명**: `transition` → `transition2` → `transition3` ... (단순 incremental, P→P+1마다 하나씩)
+- **트레이스형 setMiniBus**: 슬롯형과 별도 함수. bg rect 대신 **path들의 `pcb-trace.bus-{state}` 클래스 토글**. status 텍스트는 트레이스 영역 위쪽, 라벨은 아래쪽
+- **connection 구조 진화**: 단일 boolean 제거. `view.bus = { state, step }`로 부품과 동일하게 4-state(placeholder/transition/active/completed) 처리. 트레이스가 부품 그 자체라는 의미가 명확해짐
+- **jumpToPhase 직전 부품 처리**: `prevMinimapState = { cpu: 'completed', ram: 'completed', bus: null }` 형태로 **명시적 키별 처리**. 자동 루프 미사용 — 새 부품 추가 시 키가 명시적이어야 누락 방지
+- **미니맵 공간**: 트레이스형은 슬롯 자리 안 차지. 기존 트레이스 영역(CPU 소켓~DIMM 슬롯 사이)을 그대로 활용. P3+ → P4+ 라벨만 갱신
 
-각 항목에 답을 미리 적지 않는 이유: 실제 P3 추가 과정에서 마주친 진짜 제약·실수가 가장 신뢰할 수 있는 가이드 소스. 사용자 메모리 원칙("패턴 굳기 전 스킬화하지 않기")과 동일.
+### 메인 무대 라벨 컨벤션 (P3에서 정해짐)
+
+부품 채널·서브 개념 라벨은 **한국어 메인 + 영문 약어 보조** 형식:
+```html
+<text>주소 버스 <tspan style="font-size:11px;font-weight:500;fill:#9c87d4;">(ADDR)</tspan></text>
+```
+이유: 위키 페이지가 한국어 정식 표기. 한국어가 먼저 인지되고 영문 약어는 함께 익힘. 학습 도구 정합성.
+
+### P4+에서 도달 시 답을 정할 것
+
+- **미니맵 공간 부족** (P5 이후 예상): viewBox 가로 확장 vs 부품 크기 축소 vs 2층 배치
+- **페이즈 인디케이터 가로 폭 도달** (P5+): 한 줄 압축 명명 vs 두 줄 분할
+- **패널형 setMiniBox 변형** (IO Device 추가 시): 슬롯형·트레이스형과 다른 패턴 — I/O 패널 + 포트 미니어처들
+
+원칙: 추측하지 말고, 실제 추가 과정에서 마주친 진짜 제약·실수가 가장 신뢰할 수 있는 가이드 소스.
 
 ## 현재 파일
 
-- `빌드업.html` — P1 CPU + P2 RAM (P3+ 미구현)
+- `빌드업.html` — P1 CPU + P2 RAM + P3 System Bus (P4+ 미구현)

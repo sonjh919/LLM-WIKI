@@ -411,8 +411,17 @@ header .principle b { color: #ffcc66; }
 
 /* Minimap (PCB motherboard style) */
 .pcb-bg            { fill: #0a1a0f; }
-.pcb-trace         { stroke: #2d5a2d; stroke-width: 1.5; fill: none; opacity: 0.55; }
-.pcb-trace.active  { stroke: #34d399; opacity: 0.95; stroke-width: 2; }
+.pcb-trace         { stroke: #2d5a2d; stroke-width: 1.5; fill: none; opacity: 0.4; }
+.pcb-trace.bus-placeholder { stroke: #2d5a2d; stroke-width: 1.5; opacity: 0.4; }
+.pcb-trace.bus-transition  { stroke: #c792ea; stroke-width: 2; opacity: 0.85; filter: drop-shadow(0 0 6px rgba(199,146,234,0.5)); }
+.pcb-trace.bus-active      { stroke: #ffcc66; stroke-width: 2.5; opacity: 0.9; filter: drop-shadow(0 0 6px rgba(255,204,102,0.45)); }
+.pcb-trace.bus-completed   { stroke: #34d399; stroke-width: 3; opacity: 1; }
+.pcb-trace.bus-justCompleted { animation: busGlow 1.8s ease-out forwards; }
+@keyframes busGlow {
+  0%   { stroke: #ffcc66; stroke-width: 4.5; filter: drop-shadow(0 0 14px rgba(255,204,102,0.85)); }
+  55%  { stroke: #7ee0c8; stroke-width: 3.5; filter: drop-shadow(0 0 10px rgba(126,224,200,0.55)); }
+  100% { stroke: #34d399; stroke-width: 3; filter: none; }
+}
 
 .cpu-socket-bg              { fill: #1a1a1a; stroke: #444; stroke-width: 1.5; }
 .cpu-socket-bg.transition   { stroke: #c792ea; stroke-width: 2.5; filter: drop-shadow(0 0 10px rgba(199,146,234,0.5)); }
@@ -506,7 +515,9 @@ header .principle b { color: #ffcc66; }
   <span class="phase-arrow">→</span>
   <span class="phase-pill locked" data-phase="2">P2 · RAM</span>
   <span class="phase-arrow">→</span>
-  <span class="phase-pill locked">P3+ · 잠김</span>
+  <span class="phase-pill locked" data-phase="3">P3 · System Bus</span>
+  <span class="phase-arrow">→</span>
+  <span class="phase-pill locked">P4+ · 잠김</span>
 </div>
 
 <!-- Minimap (누적 조감도 — PCB 메인보드) -->
@@ -537,11 +548,13 @@ header .principle b { color: #ffcc66; }
     <!-- Footer label -->
     <text x="35" y="135" fill="rgba(150,180,150,0.3)" font-size="8" font-family="'SF Mono', monospace" letter-spacing="1">LLM-WIKI · STAGE-1</text>
 
-    <!-- ===== TRACE LAYER (CPU socket ↔ DIMM slot) ===== -->
-    <g id="mini-trace-cpu-ram">
-      <path id="mini-trace-1" class="pcb-trace" d="M 195 60 L 230 60 L 250 70 L 320 70"/>
-      <path id="mini-trace-2" class="pcb-trace" d="M 195 75 L 320 75"/>
-      <path id="mini-trace-3" class="pcb-trace" d="M 195 90 L 230 90 L 250 80 L 320 80"/>
+    <!-- ===== BUS AREA (트레이스 자체가 부품) ===== -->
+    <g id="mini-bus-area">
+      <path id="mini-trace-1" class="pcb-trace bus-placeholder" d="M 195 60 L 230 60 L 250 70 L 320 70"/>
+      <path id="mini-trace-2" class="pcb-trace bus-placeholder" d="M 195 75 L 320 75"/>
+      <path id="mini-trace-3" class="pcb-trace bus-placeholder" d="M 195 90 L 230 90 L 250 80 L 320 80"/>
+      <text id="mini-bus-status" class="minimap-status placeholder" x="258" y="20" text-anchor="middle">미학습</text>
+      <text class="socket-label" x="258" y="110" text-anchor="middle">[ SYSTEM BUS ]</text>
     </g>
 
     <!-- ===== CPU SOCKET AREA (x: 85~195, y: 28~118) ===== -->
@@ -607,10 +620,10 @@ header .principle b { color: #ffcc66; }
       <text id="mini-ram-qmark" class="minimap-q-mark" x="470" y="80" text-anchor="middle">?</text>
     </g>
 
-    <!-- ===== FUTURE SLOT (P3+ placeholder) ===== -->
+    <!-- ===== FUTURE SLOT (P4+ placeholder) ===== -->
     <g id="mini-future">
       <rect class="future-slot" x="660" y="56" width="170" height="34" rx="2"/>
-      <text class="future-slot-label" x="745" y="78" text-anchor="middle">[ P3+ slot ]</text>
+      <text class="future-slot-label" x="745" y="78" text-anchor="middle">[ P4+ slot ]</text>
       <text class="future-slot-label" x="745" y="110" text-anchor="middle" style="font-size:8px;opacity:0.7;">Storage / IO ?</text>
     </g>
   </svg>
@@ -804,6 +817,117 @@ header .principle b { color: #ffcc66; }
 
       <text class="help-text" x="440" y="295" text-anchor="middle" style="fill:#7ee0c8;font-size:13px;font-weight:600;">✓ 메모리 계층 구조 — 빠른 RAM이 작업 공간, Storage는 영구 보관</text>
     </g>
+
+    <!-- ===== TRANSITION2: 부품들 사이에 통로가 없다 ===== -->
+    <g id="transition2-state" class="fade-hidden">
+      <rect class="cpu-box" x="60" y="120" width="100" height="80" rx="6" opacity="0.65"/>
+      <text class="label-name" x="110" y="155" text-anchor="middle" fill="#ff8c66" style="font-size:14px;">CPU</text>
+      <text class="label-sub" x="110" y="178" text-anchor="middle" style="font-size:10px;">~1ns</text>
+
+      <rect class="ram-box" x="280" y="100" width="200" height="120" rx="6" opacity="0.65"/>
+      <text class="label-name" x="380" y="135" text-anchor="middle" fill="#ffcc66" style="font-size:14px;">RAM</text>
+      <text class="label-sub" x="380" y="160" text-anchor="middle" style="font-size:10px;">~100ns</text>
+
+      <rect class="storage-box" x="600" y="120" width="100" height="80" rx="6" opacity="0.65"/>
+      <text class="label-name" x="650" y="155" text-anchor="middle" fill="#7ee0c8" style="font-size:13px;">Storage</text>
+      <text class="label-sub" x="650" y="178" text-anchor="middle" style="font-size:10px;">~10ms</text>
+
+      <path d="M 160 160 L 280 160" stroke="#445" stroke-width="2" stroke-dasharray="6 4" fill="none"/>
+      <path d="M 480 160 L 600 160" stroke="#445" stroke-width="2" stroke-dasharray="6 4" fill="none"/>
+      <text class="placeholder-q" x="220" y="170" text-anchor="middle" style="font-size:34px;">?</text>
+      <text class="placeholder-q" x="540" y="170" text-anchor="middle" style="font-size:34px;">?</text>
+
+      <text class="help-text" x="440" y="265" text-anchor="middle" style="font-size:13px;">부품들이 있어도 데이터를 주고받을 통로가 없으면 무용지물</text>
+      <text class="help-text" x="440" y="290" text-anchor="middle" style="fill:#dbb5ee;font-size:14px;font-weight:600;">→ 어떤 통로 구조가 필요할까?</text>
+    </g>
+
+    <!-- ===== P3 STEP 0: System Bus 학습 시작 안내 ===== -->
+    <g id="p3-step0" class="fade-hidden">
+      <text class="placeholder-q" x="440" y="160" text-anchor="middle">?</text>
+      <text class="help-text" x="440" y="200" text-anchor="middle">System Bus 학습 시작 — Q1 답을 떠올려보세요</text>
+      <text class="help-text" x="440" y="230" text-anchor="middle" style="fill:#556;font-size:11px;">CPU·RAM은 위 조감도에 박혔습니다 ↑</text>
+    </g>
+
+    <!-- ===== P3 STEP 1: omnibus 어원 + 'SYSTEM BUS' 키워드 ===== -->
+    <g id="p3-step1" class="fade-hidden">
+      <text x="440" y="125" text-anchor="middle" style="font-size:13px;fill:#888;letter-spacing:2px;">LATIN: omnibus</text>
+      <text class="label-keyword" x="440" y="185" text-anchor="middle" style="font-size:46px;fill:#a78bfa;font-weight:800;">SYSTEM BUS</text>
+      <text x="440" y="220" text-anchor="middle" style="font-size:14px;fill:#aaa;font-weight:500;">"모두를 위한"</text>
+      <text class="help-text" x="440" y="265" text-anchor="middle" style="font-size:13px;">여러 부품이 공유하는 하나의 통신 통로</text>
+      <text class="help-text" x="440" y="288" text-anchor="middle" style="font-size:11px;">시스템 전체를 잇는 버스 → "System" Bus</text>
+    </g>
+
+    <!-- ===== P3 STEP 2: 1:1 전용선의 폭발 (N(N-1)/2) ===== -->
+    <g id="p3-step2" class="fade-hidden">
+      <!-- 5개 부품 직접 연결 거미줄 (N(N-1)/2 = 10) -->
+      <line x1="440" y1="80"  x2="535" y2="149" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="440" y1="80"  x2="499" y2="261" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="440" y1="80"  x2="381" y2="261" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="440" y1="80"  x2="345" y2="149" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="535" y1="149" x2="499" y2="261" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="535" y1="149" x2="381" y2="261" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="535" y1="149" x2="345" y2="149" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="499" y1="261" x2="381" y2="261" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="499" y1="261" x2="345" y2="149" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+      <line x1="381" y1="261" x2="345" y2="149" stroke="#ff6b6b" stroke-width="1.5" opacity="0.55"/>
+
+      <circle cx="440" cy="80" r="18" fill="#1a0d0d" stroke="#ff6b6b" stroke-width="1.5"/>
+      <text x="440" y="85" text-anchor="middle" fill="#ff8c66" font-size="11" font-weight="700">CPU</text>
+
+      <circle cx="535" cy="149" r="18" fill="#1a1408" stroke="#ffcc66" stroke-width="1.5"/>
+      <text x="535" y="154" text-anchor="middle" fill="#ffcc66" font-size="11" font-weight="700">RAM</text>
+
+      <circle cx="499" cy="261" r="18" fill="#0d1a14" stroke="#7ee0c8" stroke-width="1.5"/>
+      <text x="499" y="266" text-anchor="middle" fill="#7ee0c8" font-size="9" font-weight="700">Stor</text>
+
+      <circle cx="381" cy="261" r="18" fill="#0d1a14" stroke="#7ee0c8" stroke-width="1.5"/>
+      <text x="381" y="266" text-anchor="middle" fill="#7ee0c8" font-size="11" font-weight="700">IO</text>
+
+      <circle cx="345" cy="149" r="18" fill="#0d1a14" stroke="#aaa" stroke-width="1.5"/>
+      <text x="345" y="154" text-anchor="middle" fill="#ccc" font-size="11" font-weight="700">GPU</text>
+
+      <text class="legacy-warn" x="700" y="120" text-anchor="middle" style="font-size:18px;">5개 부품 → 10개 선</text>
+      <text class="label-sub" x="700" y="148" text-anchor="middle" style="font-size:14px;fill:#ff8c66;">N(N-1)/2 = 5×4/2 = 10</text>
+      <text class="label-sub" x="700" y="178" text-anchor="middle" style="font-size:11px;">N개 부품 → N(N-1)/2 선</text>
+      <text class="label-sub" x="700" y="200" text-anchor="middle" style="font-size:10px;fill:#886;">기하급수적 폭발</text>
+
+      <text class="help-text" x="440" y="320" text-anchor="middle" style="fill:#dbb5ee;font-size:13px;font-weight:600;">→ "공유 통로 하나면 N개로 끝나지 않을까?"</text>
+    </g>
+
+    <!-- ===== P3 STEP 3: 공유 통로 + 3종 버스 분리 (해결) ===== -->
+    <g id="p3-step3" class="fade-hidden">
+      <rect class="cpu-box" x="80" y="60" width="100" height="60" rx="6"/>
+      <text class="label-name" x="130" y="95" text-anchor="middle" fill="#ff8c66" style="font-size:14px;">CPU</text>
+
+      <rect class="ram-box" x="270" y="60" width="100" height="60" rx="6"/>
+      <text class="label-name" x="320" y="95" text-anchor="middle" fill="#ffcc66" style="font-size:14px;">RAM</text>
+
+      <rect class="storage-box" x="460" y="60" width="100" height="60" rx="6"/>
+      <text class="label-name" x="510" y="95" text-anchor="middle" fill="#7ee0c8" style="font-size:13px;">Storage</text>
+
+      <rect class="storage-box" x="650" y="60" width="100" height="60" rx="6"/>
+      <text class="label-name" x="700" y="95" text-anchor="middle" fill="#7ee0c8" style="font-size:13px;">IO</text>
+
+      <line x1="130" y1="120" x2="130" y2="160" stroke="#a78bfa" stroke-width="2"/>
+      <line x1="320" y1="120" x2="320" y2="160" stroke="#a78bfa" stroke-width="2"/>
+      <line x1="510" y1="120" x2="510" y2="160" stroke="#a78bfa" stroke-width="2"/>
+      <line x1="700" y1="120" x2="700" y2="160" stroke="#a78bfa" stroke-width="2"/>
+
+      <rect x="60" y="160" width="760" height="24" fill="rgba(167,139,250,0.13)" stroke="#a78bfa" stroke-width="1.5" rx="3"/>
+      <text x="80" y="177" fill="#a78bfa" style="font-size:13px;font-weight:700;">주소 버스 <tspan style="font-size:11px;font-weight:500;fill:#9c87d4;">(ADDR)</tspan></text>
+      <text x="240" y="177" fill="#aaa" style="font-size:10px;">"어디로?" — 단방향 (CPU →)</text>
+
+      <rect x="60" y="190" width="760" height="24" fill="rgba(167,139,250,0.20)" stroke="#a78bfa" stroke-width="2" rx="3"/>
+      <text x="80" y="207" fill="#a78bfa" style="font-size:13px;font-weight:700;">데이터 버스 <tspan style="font-size:11px;font-weight:500;fill:#9c87d4;">(DATA)</tspan></text>
+      <text x="240" y="207" fill="#aaa" style="font-size:10px;">"무엇을?" — 양방향 (R/W)</text>
+
+      <rect x="60" y="220" width="760" height="24" fill="rgba(167,139,250,0.13)" stroke="#a78bfa" stroke-width="1.5" rx="3"/>
+      <text x="80" y="237" fill="#a78bfa" style="font-size:13px;font-weight:700;">제어 버스 <tspan style="font-size:11px;font-weight:500;fill:#9c87d4;">(CTRL)</tspan></text>
+      <text x="240" y="237" fill="#aaa" style="font-size:10px;">"어떻게?" — 읽기·쓰기·인터럽트</text>
+
+      <text class="help-text" x="440" y="272" text-anchor="middle" style="font-size:11px;">왜 3개로 분리? — 정보 성격 다름·해석 오버헤드 제거·폭 최적화</text>
+      <text class="help-text" x="440" y="298" text-anchor="middle" style="fill:#7ee0c8;font-size:13px;font-weight:600;">✓ N개 선이 1개 공유 통로로 → 시스템 빌드 완료</text>
+    </g>
   </svg>
 </div>
 
@@ -912,12 +1036,43 @@ const data = {
       }
     ],
     completeMsg: "P2 완료 — CPU + RAM + Storage 시스템 빌드. (다음 프로토타입에서 P3 System Bus·P4 Storage·P5 IO Device·P6 요청 흐름까지 확장 예정)"
+  },
+
+  transition2: {
+    q: "지금 CPU + RAM가 있어도 어떤 한계가 있을까?",
+    a: "부품이 있어도 <b>서로 데이터를 주고받을 통로가 없으면 무용지물</b>. 부품마다 1:1 전용선을 깔면 부품 N개일 때 선이 <b>N(N-1)/2개</b> — 부품 늘수록 기하급수. → 공유 통로 하나면 N개로 끝."
+  },
+
+  p3: {
+    phaseLabel: 'P3 · System Bus',
+    initialStateId: 'p3-step0',
+    steps: [
+      {
+        q: "왜 이름이 'System Bus'인가?",
+        a: "<b>'Bus'</b>는 라틴어 <b>omnibus</b>(모두를 위한)에서 유래. 여러 부품이 공유하는 하나의 통신 통로. 시스템 전체를 잇는 버스이기 때문에 'System' Bus.",
+        meta: "어원 비유는 잘 잡혔음 ('실어나르다' 방향 정확). 보정 한 줄로 충분 — '버스 노선처럼 정해진 곳을 지나는 통로'.",
+        showId: 'p3-step1'
+      },
+      {
+        q: "기존 문제는? (1:1 전용선의 한계)",
+        a: "부품마다 1:1 전용선을 깔면 부품 N개일 때 선이 <b>N(N-1)/2개</b>. 5개면 10개, 10개면 45개 — <b>기하급수적 폭발</b>. 부품 늘수록 메인보드가 케이블 거미줄이 됨.",
+        meta: "내 답은 \"ALU·레지스터 등 서로 데이터 못 주고받음\"이었음. 실제 System Bus는 CPU <b>내부</b>가 아니라 <b>부품 간</b>(CPU↔RAM↔IO↔Storage) 연결. → \"어느 스케일의 이야기인가\"를 먼저 특정하는 습관 필요. 비슷한 단어(\"서로 연결\")를 써도 층위가 다르면 개념이 꼬인다.",
+        showId: 'p3-step2'
+      },
+      {
+        q: "어떻게 해결했나? (공유 통로 + 3종 분리)",
+        a: "공유 통로 하나로 N개 부품이 모두 연결 (선 N개로 끝). 통로는 <b>3종 버스로 분리</b>: <b>주소 버스</b>(\"어디로?\" 단방향) · <b>데이터 버스</b>(\"무엇을?\" 양방향) · <b>제어 버스</b>(\"어떻게?\" 읽기·쓰기·인터럽트).",
+        meta: "본인 메타 질문 \"왜 3개로 분리?\"가 핵심 도달 — 정보 성격 다름·해석 오버헤드 제거·폭 최적화. 그리고 \"다른 장치끼리 이어지는 버스 없냐?\" 메타 질문이 <b>DMA</b> 개념 자연 유도. 답을 듣고 끝이 아니라 다음 질문을 낳는 복습 모드.",
+        showId: 'p3-step3'
+      }
+    ],
+    completeMsg: "P3 완료 — System Bus까지 빌드. CPU + RAM + System Bus(3채널) 통합 시스템. (다음: P4 Storage·P5 IO Device로 확장 예정)"
   }
 };
 
 // ── State machine ───────────────────────────────────────────────────
 const state = {
-  phase: 'p1',     // 'p1' | 'transition' | 'p2'
+  phase: 'p1',     // 'p1' | 'transition' | 'p2' | 'transition2' | 'p3' | 'complete'
   step: 0,         // index into phase steps (transition has no index)
   revealed: false  // current step's answer revealed?
 };
@@ -944,7 +1099,8 @@ const els = {
 // Main stage step group IDs (only one shown at a time)
 const MAIN_STAGE_IDS = [
   'empty-state', 'p1-step1', 'p1-step2', 'p1-step3',
-  'transition-state', 'p2-step0', 'p2-step1', 'p2-step2', 'p2-step3'
+  'transition-state', 'p2-step0', 'p2-step1', 'p2-step2', 'p2-step3',
+  'transition2-state', 'p3-step0', 'p3-step1', 'p3-step2', 'p3-step3'
 ];
 
 function setVisible(id, visible) {
@@ -960,15 +1116,13 @@ function computeView() {
     main: 'empty-state',
     cpu: { state: 'placeholder', step: 0 },
     ram: { state: 'placeholder', step: 0 },
-    connection: false
+    bus: { state: 'placeholder', step: 0 }
   };
 
   if (state.phase === 'p1') {
-    // Main: empty until first reveal, then evolves step by step
     if (state.step === 0 && !state.revealed)      v.main = 'empty-state';
     else if (state.revealed)                       v.main = `p1-step${state.step + 1}`;
     else                                           v.main = `p1-step${state.step}`;
-    // Last Q answered → CPU mini box flips to completed immediately (glow fires)
     if (state.step === 2 && state.revealed) v.cpu = { state: 'completed' };
     else                                    v.cpu = { state: 'active', step: state.step };
   } else if (state.phase === 'transition') {
@@ -980,24 +1134,32 @@ function computeView() {
     else if (state.revealed)                       v.main = `p2-step${state.step + 1}`;
     else                                           v.main = `p2-step${state.step}`;
     v.cpu = { state: 'completed' };
-    // Last Q answered → RAM mini box flips to completed immediately (glow fires) + connection activates
-    if (state.step === 2 && state.revealed) {
-      v.ram = { state: 'completed' };
-      v.connection = true;
-    } else {
-      v.ram = { state: 'active', step: state.step };
-    }
-  } else if (state.phase === 'complete') {
-    v.main = 'p2-step3';
+    if (state.step === 2 && state.revealed) v.ram = { state: 'completed' };
+    else                                    v.ram = { state: 'active', step: state.step };
+  } else if (state.phase === 'transition2') {
+    v.main = state.revealed ? 'transition2-state' : 'p2-step3';
     v.cpu = { state: 'completed' };
     v.ram = { state: 'completed' };
-    v.connection = true;
+    v.bus = state.revealed ? { state: 'transition' } : { state: 'placeholder' };
+  } else if (state.phase === 'p3') {
+    if (state.step === 0 && !state.revealed)      v.main = 'p3-step0';
+    else if (state.revealed)                       v.main = `p3-step${state.step + 1}`;
+    else                                           v.main = `p3-step${state.step}`;
+    v.cpu = { state: 'completed' };
+    v.ram = { state: 'completed' };
+    if (state.step === 2 && state.revealed) v.bus = { state: 'completed' };
+    else                                    v.bus = { state: 'active', step: state.step };
+  } else if (state.phase === 'complete') {
+    v.main = 'p3-step3';
+    v.cpu = { state: 'completed' };
+    v.ram = { state: 'completed' };
+    v.bus = { state: 'completed' };
   }
   return v;
 }
 
-// Tracks previous minimap state so that just-completed glow fires only once
-let prevMinimapState = { cpu: null, ram: null };
+// Tracks previous minimap state so that just-completed glow fires only once per part
+let prevMinimapState = { cpu: null, ram: null, bus: null };
 
 function renderMainStage(mainId) {
   MAIN_STAGE_IDS.forEach(id => setVisible(id, id === mainId));
@@ -1049,15 +1211,42 @@ function setMiniBox(part, partState) {
   prevMinimapState[part] = partState.state;
 }
 
+// Bus is a trace-type part — paths instead of socket/slot rect.
+// stroke + width toggle via bus-{state} class on each path.
+function setMiniBus(busState) {
+  const status = document.getElementById('mini-bus-status');
+  const isFreshComplete = busState.state === 'completed' && prevMinimapState.bus !== 'completed';
+  const traceClass = isFreshComplete
+    ? `pcb-trace bus-completed bus-justCompleted`
+    : `pcb-trace bus-${busState.state}`;
+  ['mini-trace-1', 'mini-trace-2', 'mini-trace-3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('class', traceClass);
+  });
+
+  let statusClass = 'minimap-status';
+  if (busState.state === 'placeholder') {
+    statusClass += ' placeholder';
+    status.textContent = '미학습';
+  } else if (busState.state === 'transition') {
+    statusClass += ' transition';
+    status.textContent = '여기에 무엇이?';
+  } else if (busState.state === 'active') {
+    statusClass += ' active';
+    status.textContent = `학습 중 · Q${(busState.step ?? 0) + 1}/3`;
+  } else if (busState.state === 'completed') {
+    statusClass += ' completed';
+    status.textContent = '✓ 빌드 완료 (3종 버스)';
+  }
+  status.setAttribute('class', statusClass);
+
+  prevMinimapState.bus = busState.state;
+}
+
 function renderMinimap(view) {
   setMiniBox('cpu', view.cpu);
   setMiniBox('ram', view.ram);
-  // PCB traces between CPU socket and DIMM slot — activate when connection is established
-  ['mini-trace-1', 'mini-trace-2', 'mini-trace-3'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.setAttribute('class', view.connection ? 'pcb-trace active' : 'pcb-trace');
-  });
+  setMiniBus(view.bus);
 }
 
 function renderStage() {
@@ -1071,16 +1260,26 @@ function setStepLabel(label) {
 }
 
 function updatePhasePills() {
+  // Order of phases: p1 → transition → p2 → transition2 → p3 → complete
+  const order = ['p1', 'transition', 'p2', 'transition2', 'p3', 'complete'];
+  const currentIdx = order.indexOf(state.phase);
+
+  // Map phase number → which order index represents "active" for that pill
+  const pillActiveIdx = { '1': 0, '2': 2, '3': 4 };
+
   const pills = els.phaseBar.querySelectorAll('.phase-pill[data-phase]');
   pills.forEach(p => {
     const ph = p.dataset.phase;
     p.classList.remove('active', 'done', 'locked');
-    if (ph === '1') {
-      if (state.phase === 'p1')                     p.classList.add('active');
-      else if (state.phase === 'transition' || state.phase === 'p2') p.classList.add('done');
-    } else if (ph === '2') {
-      if (state.phase === 'p2')                     p.classList.add('active');
-      else if (state.phase === 'p1' || state.phase === 'transition') p.classList.add('locked');
+    const targetIdx = pillActiveIdx[ph];
+    if (targetIdx === undefined) return;
+
+    if (currentIdx === targetIdx || (ph === '1' && state.phase === 'transition') || (ph === '2' && state.phase === 'transition2')) {
+      p.classList.add('active');
+    } else if (currentIdx > targetIdx) {
+      p.classList.add('done');
+    } else {
+      p.classList.add('locked');
     }
   });
 }
@@ -1101,7 +1300,7 @@ function render() {
   els.submitBtn.disabled = false;
   els.myAnswer.focus();
 
-  if (state.phase === 'p1' || state.phase === 'p2') {
+  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3') {
     const phaseData = data[state.phase];
     const stepData = phaseData.steps[state.step];
     currentStepData = stepData;
@@ -1112,20 +1311,20 @@ function render() {
     els.qText.textContent = stepData.q;
     els.metaNote.style.display = '';
 
-    // Stage reflects current part states (active area shows previous step's visual until reveal)
     renderStage();
     setStepLabel(`${phaseData.phaseLabel} · 질문 ${state.step + 1}/3`);
-  } else if (state.phase === 'transition') {
-    currentStepData = data.transition;
+  } else if (state.phase === 'transition' || state.phase === 'transition2') {
+    const tData = data[state.phase];
+    currentStepData = tData;
     els.qLabel.textContent = 'PHASE 전환';
     els.qLabel.classList.add('transition');
     els.qText.classList.add('transition');
-    els.qText.textContent = data.transition.q;
+    els.qText.textContent = tData.q;
     els.metaNote.style.display = 'none';
 
-    // CPU stays completed (P1 result), RAM area still placeholder until transition reveal
     renderStage();
-    setStepLabel('P1 → P2 전환 질문');
+    const transitionLabel = state.phase === 'transition' ? 'P1 → P2 전환 질문' : 'P2 → P3 전환 질문';
+    setStepLabel(transitionLabel);
   } else if (state.phase === 'complete') {
     showCompletionUI();
   }
@@ -1159,10 +1358,10 @@ function submitAnswer() {
   // Stage evolves: active area moves forward; completed parts remain on stage
   renderStage();
 
-  if (state.phase === 'p1' || state.phase === 'p2') {
+  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3') {
     const phaseData = data[state.phase];
     setStepLabel(`${phaseData.phaseLabel} · 진화 ${state.step + 1}/3 ✓`);
-  } else if (state.phase === 'transition') {
+  } else if (state.phase === 'transition' || state.phase === 'transition2') {
     setStepLabel('전환 답 공개 ✓');
   }
 }
@@ -1180,28 +1379,22 @@ els.myAnswer.addEventListener('keydown', (e) => {
 // ── Next ────────────────────────────────────────────────────────────
 els.nextBtn.addEventListener('click', () => {
   if (state.phase === 'p1') {
-    if (state.step < 2) {
-      state.step += 1;
-      render();
-    } else {
-      // P1 done → transition
-      state.phase = 'transition';
-      render();
-    }
+    if (state.step < 2) { state.step += 1; render(); }
+    else { state.phase = 'transition'; render(); }
   } else if (state.phase === 'transition') {
-    // Move to P2
     state.phase = 'p2';
     state.step = 0;
     render();
   } else if (state.phase === 'p2') {
-    if (state.step < 2) {
-      state.step += 1;
-      render();
-    } else {
-      // P2 done
-      state.phase = 'complete';
-      render();
-    }
+    if (state.step < 2) { state.step += 1; render(); }
+    else { state.phase = 'transition2'; render(); }
+  } else if (state.phase === 'transition2') {
+    state.phase = 'p3';
+    state.step = 0;
+    render();
+  } else if (state.phase === 'p3') {
+    if (state.step < 2) { state.step += 1; render(); }
+    else { state.phase = 'complete'; render(); }
   }
 });
 
@@ -1219,7 +1412,7 @@ function showCompletionUI() {
   els.answerBlock.classList.add('show');
   // Hide comparison cards, show only completion message in actual side
   els.mineText.parentElement.style.display = 'none';
-  els.actualText.innerHTML = data.p2.completeMsg;
+  els.actualText.innerHTML = data.p3.completeMsg;
   els.metaNote.innerHTML = `
     <span class="meta-label">🧪 형태 검증 포인트</span>
     이 프로토타입의 핵심: (1) 답을 직접 입력해야 시각이 변함 — 능동 회상 강제 작동? (2) 내 답 vs 실제 답 비교가 회상 효과 강화? (3) 페이즈 전환 질문이 부품 간 인과를 만듦? (4) "내가 빌드했다"는 소유감 — 정적 조감 대비 차이가 느껴졌나?
@@ -1233,14 +1426,16 @@ function jumpToPhase(phaseNum) {
   state.revealed = false;
   if (phaseNum === '1') {
     state.phase = 'p1';
-    // Fresh start — glow should fire when CPU/RAM each complete
-    prevMinimapState = { cpu: null, ram: null };
+    prevMinimapState = { cpu: null, ram: null, bus: null };
   } else if (phaseNum === '2') {
     state.phase = 'p2';
-    // CPU is treated as already learned (silently completed) → suppress glow
-    prevMinimapState = { cpu: 'completed', ram: null };
+    // CPU treated as already learned → suppress glow on its mini box
+    prevMinimapState = { cpu: 'completed', ram: null, bus: null };
+  } else if (phaseNum === '3') {
+    state.phase = 'p3';
+    // CPU·RAM both treated as already learned → suppress glow on both
+    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: null };
   }
-  // Restore UI elements that completion state may have hidden
   els.nextBtn.style.display = '';
   els.mineText.parentElement.style.display = '';
   els.mineText.classList.remove('skipped');

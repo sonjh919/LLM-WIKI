@@ -1,6 +1,6 @@
 ---
 description: 위키 작업 이력. 시간순 append-only.
-updated: 2026-04-29 (deprecated 결과물 3건 정리)
+updated: 2026-04-29 (빌드업 P3 System Bus 추가 + 가이드 P4+ 결정 사항 반영)
 ---
 
 # Log
@@ -225,6 +225,28 @@ updated: 2026-04-29 (deprecated 결과물 3건 정리)
 - 나의 핵심 맥락.md: 시각화 한 줄을 "복습 효율 → 장기기억 전이 필수 도구"로 강화
 - 인포그래픽 실험 기록.md: N=2 미스매치 발견(클릭 즉시 답 노출 → 능동 회상 무력) + 빌드업형 방향 결정 기록
 - 메모리: 새 방향 반영 (project_infographic_output.md)
+
+## [2026-04-29] output | 빌드업 P3 System Bus 추가 (트레이스형 부품)
+- output/컴퓨터구조 빌드업/빌드업.html에 P3 추가
+- 메인 무대 신규 그룹: transition2-state, p3-step0~3 (큼지막한 step별 시각)
+  - Q1: omnibus 어원 + "SYSTEM BUS" 키워드
+  - Q2: 5개 부품 N(N-1)/2 거미줄 (직접 연결의 폭발)
+  - Q3: 4개 부품 + 3종 버스(주소·데이터·제어) 분리 + 한국어 메인 + 영문 약어
+- 미니맵 트레이스형 처리: bus 자체가 부품 — 기존 트레이스 영역의 stroke 클래스 토글로 상태 표현
+  - placeholder/transition/active/completed 4-state. completed 시 굵은 녹색 + busGlow 키프레임 1.8s 1회
+- 새 setMiniBus 함수 (슬롯형 setMiniBox와 별도). renderMinimap에서 호출
+- computeView에 transition2·p3·complete 분기 추가, view에 bus 필드 (connection boolean 제거)
+- prevMinimapState에 bus 키 추가
+- jumpToPhase에 '3' 분기 — `{ cpu: 'completed', ram: 'completed', bus: null }` 명시적 처리
+- 페이즈 인디케이터에 P3 pill 추가, 잠김 라벨 P3+ → P4+로 변경
+- updatePhasePills 새 흐름 (5단 order 배열 기반)
+
+## [2026-04-29] reflect | 빌드업 가이드 CLAUDE.md에 P3 학습 반영
+- "P4+ 결정 지점" 섹션을 "확장 시 결정 사항"으로 재구성
+- P3에서 답이 정해진 항목 명시: transition 명명·트레이스형 setMiniBus·connection 4-state 진화·jumpToPhase 명시적 키 처리·트레이스형은 슬롯 자리 안 차지
+- "메인 무대 라벨 컨벤션" 섹션 추가: 한국어 메인 + 영문 약어 보조 (예: "주소 버스 (ADDR)")
+- P4+에 도달 시 답을 정할 것: 미니맵 공간 부족·페이즈 인디케이터 가로 폭·패널형 setMiniBox(IO Device)
+- "현재 파일" 섹션 갱신: P1+P2+P3, P4+ 미구현
 
 ## [2026-04-29] cleanup | deprecated 결과물 3건 삭제
 - 삭제: output/인포그래픽 실험 기록.md (결정 history는 log.md에 충분히 기록되어 중복)
