@@ -433,6 +433,16 @@ header .principle b { color: #ffcc66; }
 .dimm-slot-bg.active        { stroke: #ffcc66; stroke-width: 2; filter: drop-shadow(0 0 10px rgba(255,204,102,0.45)); }
 .dimm-slot-bg.completed     { stroke: #34d399; stroke-width: 1.5; }
 
+.m2-slot-bg                 { fill: #0d0d0d; stroke: #555; stroke-width: 1.2; }
+.m2-slot-bg.transition      { stroke: #c792ea; stroke-width: 2; filter: drop-shadow(0 0 8px rgba(199,146,234,0.5)); }
+.m2-slot-bg.active          { stroke: #ffcc66; stroke-width: 2; filter: drop-shadow(0 0 8px rgba(255,204,102,0.45)); }
+.m2-slot-bg.completed       { stroke: #34d399; stroke-width: 1.5; }
+.m2-mount                   { fill: #2a2a2a; stroke: #666; stroke-width: 0.5; }
+
+.ssd-pcb                    { fill: #0a1f1c; stroke: #1a4540; stroke-width: 0.7; }
+.ssd-chip                   { fill: #0a0a0a; stroke: #2a3a35; stroke-width: 0.4; }
+.ssd-label                  { fill: #7ee0c8; font-size: 9px; font-weight: 700; font-family: 'SF Mono', monospace; }
+
 .justCompleted-pcb { animation: pcbGlow 1.8s ease-out forwards; }
 @keyframes pcbGlow {
   0%   { stroke: #ffcc66; stroke-width: 3.5; filter: drop-shadow(0 0 18px rgba(255,204,102,0.9)); }
@@ -517,7 +527,9 @@ header .principle b { color: #ffcc66; }
   <span class="phase-arrow">→</span>
   <span class="phase-pill locked" data-phase="3">P3 · System Bus</span>
   <span class="phase-arrow">→</span>
-  <span class="phase-pill locked">P4+ · 잠김</span>
+  <span class="phase-pill locked" data-phase="4">P4 · Storage</span>
+  <span class="phase-arrow">→</span>
+  <span class="phase-pill locked">P5+ · 잠김</span>
 </div>
 
 <!-- Minimap (누적 조감도 — PCB 메인보드) -->
@@ -620,11 +632,35 @@ header .principle b { color: #ffcc66; }
       <text id="mini-ram-qmark" class="minimap-q-mark" x="470" y="80" text-anchor="middle">?</text>
     </g>
 
-    <!-- ===== FUTURE SLOT (P4+ placeholder) ===== -->
-    <g id="mini-future">
-      <rect class="future-slot" x="660" y="56" width="170" height="34" rx="2"/>
-      <text class="future-slot-label" x="745" y="78" text-anchor="middle">[ P4+ slot ]</text>
-      <text class="future-slot-label" x="745" y="110" text-anchor="middle" style="font-size:8px;opacity:0.7;">Storage / IO ?</text>
+    <!-- ===== M.2 SLOT AREA (Storage, P4) — x:660~830 ===== -->
+    <g id="mini-storage-area">
+      <!-- Slot frame -->
+      <rect id="mini-storage-bg" class="m2-slot-bg" x="660" y="62" width="170" height="22" rx="2"/>
+      <!-- Mount post (M.2 ratio key) -->
+      <circle class="m2-mount" cx="822" cy="73" r="3"/>
+
+      <!-- Socket label -->
+      <text class="socket-label" x="745" y="105" text-anchor="middle">[ M.2 SLOT ]</text>
+
+      <!-- Status text -->
+      <text id="mini-storage-status" class="minimap-status placeholder" x="745" y="50" text-anchor="middle">미학습</text>
+
+      <!-- SSD module (visible only when completed) -->
+      <g id="mini-storage-module" class="fade-hidden">
+        <rect class="ssd-pcb" x="660" y="58" width="170" height="30" rx="2"/>
+        <rect class="ssd-chip" x="668" y="64" width="34" height="18" rx="1"/>
+        <rect class="ssd-chip" x="706" y="64" width="34" height="18" rx="1"/>
+        <rect class="ssd-chip" x="744" y="64" width="34" height="18" rx="1"/>
+        <text class="ssd-label" x="800" y="76" text-anchor="middle">SSD</text>
+      </g>
+
+      <!-- Question mark -->
+      <text id="mini-storage-qmark" class="minimap-q-mark" x="745" y="80" text-anchor="middle">?</text>
+    </g>
+
+    <!-- ===== FUTURE HINT (P5+) ===== -->
+    <g id="mini-future" opacity="0.5">
+      <text class="future-slot-label" x="858" y="78" text-anchor="middle" style="font-size:8px;">P5+</text>
     </g>
   </svg>
 </div>
@@ -928,6 +964,111 @@ header .principle b { color: #ffcc66; }
       <text class="help-text" x="440" y="272" text-anchor="middle" style="font-size:11px;">왜 3개로 분리? — 정보 성격 다름·해석 오버헤드 제거·폭 최적화</text>
       <text class="help-text" x="440" y="298" text-anchor="middle" style="fill:#7ee0c8;font-size:13px;font-weight:600;">✓ N개 선이 1개 공유 통로로 → 시스템 빌드 완료</text>
     </g>
+
+    <!-- ===== TRANSITION3: 휘발성·용량 한계 ===== -->
+    <g id="transition3-state" class="fade-hidden">
+      <rect class="cpu-box" x="60" y="80" width="100" height="60" rx="6" opacity="0.55"/>
+      <text class="label-name" x="110" y="115" text-anchor="middle" fill="#ff8c66" style="font-size:13px;">CPU</text>
+
+      <rect class="ram-box" x="280" y="80" width="320" height="120" rx="6" opacity="0.85"/>
+      <text class="label-name" x="440" y="110" text-anchor="middle" fill="#ffcc66" style="font-size:18px;">RAM</text>
+      <text class="label-sub" x="440" y="135" text-anchor="middle" style="font-size:12px;">~100 ns · 휘발성 · 작은 용량</text>
+
+      <text class="legacy-warn" x="440" y="178" text-anchor="middle" style="font-size:16px;">⚡ 전원 OFF → 모든 데이터 사라짐</text>
+
+      <rect x="60" y="210" width="760" height="22" fill="rgba(167,139,250,0.13)" stroke="#a78bfa" stroke-width="1.5" rx="3"/>
+      <text x="80" y="227" fill="#a78bfa" style="font-size:11px;font-weight:700;">SYSTEM BUS</text>
+
+      <text class="placeholder-q" x="700" y="170" text-anchor="middle" style="font-size:50px;">?</text>
+      <text class="help-text" x="700" y="205" text-anchor="middle">영구 보관할 곳?</text>
+
+      <text class="help-text" x="440" y="270" text-anchor="middle" style="font-size:13px;">RAM은 빠르지만 휘발성이고 용량이 작다</text>
+      <text class="help-text" x="440" y="295" text-anchor="middle" style="fill:#dbb5ee;font-size:14px;font-weight:600;">→ 전원 꺼져도 유지되는 대용량 공간이 필요</text>
+    </g>
+
+    <!-- ===== P4 STEP 0: Storage 학습 시작 안내 ===== -->
+    <g id="p4-step0" class="fade-hidden">
+      <text class="placeholder-q" x="440" y="160" text-anchor="middle">?</text>
+      <text class="help-text" x="440" y="200" text-anchor="middle">Storage 학습 시작 — Q1 답을 떠올려보세요</text>
+      <text class="help-text" x="440" y="230" text-anchor="middle" style="fill:#556;font-size:11px;">CPU·RAM·System Bus는 위 조감도에 박혔습니다 ↑</text>
+    </g>
+
+    <!-- ===== P4 STEP 1: Storage 키워드 + 창고 비유 ===== -->
+    <g id="p4-step1" class="fade-hidden">
+      <text class="label-keyword" x="440" y="180" text-anchor="middle" style="font-size:46px;fill:#7ee0c8;font-weight:800;">STORAGE</text>
+      <text x="440" y="215" text-anchor="middle" style="font-size:14px;fill:#aaa;font-weight:500;">보조기억장치 (Secondary Storage)</text>
+
+      <!-- 작업 공간 vs 창고 비유 -->
+      <g transform="translate(0, 240)">
+        <rect class="ram-box" x="200" y="0" width="180" height="40" rx="4" opacity="0.7"/>
+        <text class="label-name" x="290" y="20" text-anchor="middle" fill="#ffcc66" style="font-size:12px;">RAM = 작업 공간</text>
+        <text class="label-sub" x="290" y="36" text-anchor="middle" style="font-size:9px;">지금 쓰는 것</text>
+
+        <rect class="storage-box" x="500" y="0" width="180" height="40" rx="4"/>
+        <text class="label-name" x="590" y="20" text-anchor="middle" fill="#7ee0c8" style="font-size:12px;">Storage = 창고</text>
+        <text class="label-sub" x="590" y="36" text-anchor="middle" style="font-size:9px;">영구 보관</text>
+      </g>
+    </g>
+
+    <!-- ===== P4 STEP 2: RAM의 한계 (휘발성 + 작은 용량) ===== -->
+    <g id="p4-step2" class="fade-hidden">
+      <!-- RAM 박스 + 한계 강조 -->
+      <rect class="ram-box" x="180" y="100" width="280" height="100" rx="6"/>
+      <text class="label-name" x="320" y="135" text-anchor="middle" fill="#ffcc66" style="font-size:18px;">RAM</text>
+      <text class="label-sub" x="320" y="160" text-anchor="middle" style="font-size:11px;">~100 ns · 작은 용량</text>
+
+      <!-- 전원 차단 시각 -->
+      <text class="legacy-warn" x="320" y="195" text-anchor="middle" style="font-size:14px;">⚡ 전원 OFF</text>
+
+      <text class="placeholder-q" x="320" y="240" text-anchor="middle" style="font-size:38px;">?</text>
+      <text class="help-text" x="320" y="280" text-anchor="middle" style="font-size:11px;">→ 모든 데이터 사라짐</text>
+
+      <!-- 우측: 영구 보관 필요 -->
+      <text class="legacy-warn" x="640" y="135" text-anchor="middle" style="font-size:16px;">필요한 것:</text>
+      <text class="label-sub" x="640" y="165" text-anchor="middle" style="font-size:13px;fill:#7ee0c8;">✓ 비휘발성 (영구 유지)</text>
+      <text class="label-sub" x="640" y="190" text-anchor="middle" style="font-size:13px;fill:#7ee0c8;">✓ 대용량 (TB 단위)</text>
+      <text class="label-sub" x="640" y="215" text-anchor="middle" style="font-size:11px;">속도는 양보 가능 (RAM 보조)</text>
+
+      <text class="help-text" x="440" y="320" text-anchor="middle" style="fill:#dbb5ee;font-size:13px;font-weight:600;">→ "전원 꺼져도 유지되는 대용량 저장소가 필요"</text>
+    </g>
+
+    <!-- ===== P4 STEP 3: Storage 도입 (HDD vs SSD + 흐름) ===== -->
+    <g id="p4-step3" class="fade-hidden">
+      <!-- 시스템 흐름: Storage → RAM → CPU (가운데 정렬) -->
+      <rect class="cpu-box" x="190" y="100" width="100" height="60" rx="6"/>
+      <text class="label-name" x="240" y="135" text-anchor="middle" fill="#ff8c66" style="font-size:14px;">CPU</text>
+
+      <rect class="ram-box" x="370" y="100" width="120" height="60" rx="6"/>
+      <text class="label-name" x="430" y="130" text-anchor="middle" fill="#ffcc66" style="font-size:14px;">RAM</text>
+      <text class="label-sub" x="430" y="148" text-anchor="middle" style="font-size:9px;">작업 공간</text>
+
+      <rect class="storage-box" x="570" y="100" width="120" height="60" rx="6"/>
+      <text class="label-name" x="630" y="130" text-anchor="middle" fill="#7ee0c8" style="font-size:14px;">Storage</text>
+      <text class="label-sub" x="630" y="148" text-anchor="middle" style="font-size:9px;">창고 (영구)</text>
+
+      <!-- 흐름 화살표: Storage(좌측) → RAM(우측), RAM(좌측) → CPU(우측) -->
+      <path d="M 570 130 L 490 130" class="flow-arrow" stroke="#7ee0c8" marker-end="url(#arrow-g)"/>
+      <text x="530" y="118" text-anchor="middle" fill="#7ee0c8" style="font-size:9px;">로드</text>
+      <path d="M 370 130 L 290 130" class="flow-arrow" marker-end="url(#arrow-y)"/>
+      <text x="330" y="118" text-anchor="middle" fill="#ffcc66" style="font-size:9px;">처리</text>
+
+      <!-- HDD vs SSD 비교 -->
+      <g transform="translate(0, 200)">
+        <rect class="storage-box" x="100" y="0" width="320" height="90" rx="6" opacity="0.7"/>
+        <text class="label-name" x="260" y="22" text-anchor="middle" fill="#7ee0c8" style="font-size:13px;">HDD</text>
+        <text class="label-sub" x="260" y="42" text-anchor="middle" style="font-size:10px;">기계식 — 회전 디스크 + 헤드 이동</text>
+        <text class="label-sub" x="260" y="60" text-anchor="middle" style="font-size:10px;fill:#aaa;">저렴 · 대용량 · 느림 (~10ms)</text>
+        <text class="label-sub" x="260" y="78" text-anchor="middle" style="font-size:9px;fill:#886;">순차 OK · 임의 접근 느림</text>
+
+        <rect class="storage-box" x="460" y="0" width="320" height="90" rx="6"/>
+        <text class="label-name" x="620" y="22" text-anchor="middle" fill="#7ee0c8" style="font-size:13px;">SSD</text>
+        <text class="label-sub" x="620" y="42" text-anchor="middle" style="font-size:10px;">전자식 — NAND 플래시 셀</text>
+        <text class="label-sub" x="620" y="60" text-anchor="middle" style="font-size:10px;fill:#aaa;">비쌈 · 빠름 (~100μs) · 충격 강함</text>
+        <text class="label-sub" x="620" y="78" text-anchor="middle" style="font-size:9px;fill:#886;">임의 접근도 빠름</text>
+      </g>
+
+      <text class="help-text" x="440" y="320" text-anchor="middle" style="fill:#7ee0c8;font-size:12px;font-weight:600;">✓ 비휘발성 대용량 — 프로그램은 Storage에서 RAM으로 로드된 뒤 CPU가 처리</text>
+    </g>
   </svg>
 </div>
 
@@ -1067,12 +1208,43 @@ const data = {
       }
     ],
     completeMsg: "P3 완료 — System Bus까지 빌드. CPU + RAM + System Bus(3채널) 통합 시스템. (다음: P4 Storage·P5 IO Device로 확장 예정)"
+  },
+
+  transition3: {
+    q: "지금 CPU + RAM + System Bus가 있어도 어떤 한계가 있을까?",
+    a: "<b>RAM은 휘발성 + 작은 용량</b>. 전원이 꺼지면 모든 데이터가 사라짐. → 전원 꺼져도 유지되는 <b>비휘발성 대용량</b> 공간이 필요."
+  },
+
+  p4: {
+    phaseLabel: 'P4 · Storage',
+    initialStateId: 'p4-step0',
+    steps: [
+      {
+        q: "왜 이름이 'Storage'인가?",
+        a: "Storage = <b>저장소</b>. 보조기억장치(Secondary Storage)라고도 함. RAM이 \"작업 공간\"이라면 Storage는 <b>\"창고\"</b> — 당장 쓰지 않는 데이터를 영구적으로 보관하는 곳.",
+        meta: "RAM(주기억장치) vs Storage(보조기억장치)의 \"주/보조\" 관계는 <b>속도가 아니라 역할</b>로 정해진 이름. CPU가 직접 읽고 쓰는 건 RAM이고, Storage는 그 RAM에 올라갈 데이터를 영구 보관.",
+        showId: 'p4-step1'
+      },
+      {
+        q: "기존 문제는? (RAM의 한계)",
+        a: "RAM은 빠르지만 <b>휘발성</b>이고 용량이 작다. 전원이 꺼지면 모든 데이터가 사라짐. → 프로그램과 데이터를 <b>영구적으로, 대용량으로</b> 보관할 곳이 필요.",
+        meta: "\"전원 꺼지면 사라진다\"는 사실은 알지만, 그게 <b>왜 치명적인지</b>가 와닿아야 함 — 부팅할 때마다 모든 프로그램·문서·OS를 새로 만들어야 한다면? Storage 없으면 컴퓨터는 매번 빈 상태로 시작.",
+        showId: 'p4-step2'
+      },
+      {
+        q: "어떻게 해결했나? (HDD vs SSD)",
+        a: "비휘발성 대용량 저장 장치. <b>HDD</b>(기계식·회전 디스크·저렴·느림) vs <b>SSD</b>(전자식·NAND 플래시·비쌈·빠름). 프로그램 실행 흐름: <b>Storage → RAM → CPU</b>.",
+        meta: "본인 메타 질문 \"SSD가 전자식이면 RAM과 같은 알고리즘이라 빠른가?\" — 같은 전자식이지만 <b>NAND 플래시는 비휘발성 유지를 위해 다른 메커니즘</b>(전자 트래핑). 그래서 RAM(~100ns)보다 1000배 느림(~100μs). 그리고 \"DB쪽을 더 파보고 싶다\"는 메타 → 학습 후보 백로그로 분리.",
+        showId: 'p4-step3'
+      }
+    ],
+    completeMsg: "P4 완료 — Storage까지 빌드. CPU + RAM + System Bus + Storage 시스템. 메모리 계층 구조 완성 (레지스터·캐시·RAM·Storage). (다음: P5 IO Device 추가 예정)"
   }
 };
 
 // ── State machine ───────────────────────────────────────────────────
 const state = {
-  phase: 'p1',     // 'p1' | 'transition' | 'p2' | 'transition2' | 'p3' | 'complete'
+  phase: 'p1',     // 'p1' | 'transition' | 'p2' | 'transition2' | 'p3' | 'transition3' | 'p4' | 'complete'
   step: 0,         // index into phase steps (transition has no index)
   revealed: false  // current step's answer revealed?
 };
@@ -1100,7 +1272,8 @@ const els = {
 const MAIN_STAGE_IDS = [
   'empty-state', 'p1-step1', 'p1-step2', 'p1-step3',
   'transition-state', 'p2-step0', 'p2-step1', 'p2-step2', 'p2-step3',
-  'transition2-state', 'p3-step0', 'p3-step1', 'p3-step2', 'p3-step3'
+  'transition2-state', 'p3-step0', 'p3-step1', 'p3-step2', 'p3-step3',
+  'transition3-state', 'p4-step0', 'p4-step1', 'p4-step2', 'p4-step3'
 ];
 
 function setVisible(id, visible) {
@@ -1116,7 +1289,8 @@ function computeView() {
     main: 'empty-state',
     cpu: { state: 'placeholder', step: 0 },
     ram: { state: 'placeholder', step: 0 },
-    bus: { state: 'placeholder', step: 0 }
+    bus: { state: 'placeholder', step: 0 },
+    storage: { state: 'placeholder', step: 0 }
   };
 
   if (state.phase === 'p1') {
@@ -1149,32 +1323,59 @@ function computeView() {
     v.ram = { state: 'completed' };
     if (state.step === 2 && state.revealed) v.bus = { state: 'completed' };
     else                                    v.bus = { state: 'active', step: state.step };
-  } else if (state.phase === 'complete') {
-    v.main = 'p3-step3';
+  } else if (state.phase === 'transition3') {
+    v.main = state.revealed ? 'transition3-state' : 'p3-step3';
     v.cpu = { state: 'completed' };
     v.ram = { state: 'completed' };
     v.bus = { state: 'completed' };
+    v.storage = state.revealed ? { state: 'transition' } : { state: 'placeholder' };
+  } else if (state.phase === 'p4') {
+    if (state.step === 0 && !state.revealed)      v.main = 'p4-step0';
+    else if (state.revealed)                       v.main = `p4-step${state.step + 1}`;
+    else                                           v.main = `p4-step${state.step}`;
+    v.cpu = { state: 'completed' };
+    v.ram = { state: 'completed' };
+    v.bus = { state: 'completed' };
+    if (state.step === 2 && state.revealed) v.storage = { state: 'completed' };
+    else                                    v.storage = { state: 'active', step: state.step };
+  } else if (state.phase === 'complete') {
+    v.main = 'p4-step3';
+    v.cpu = { state: 'completed' };
+    v.ram = { state: 'completed' };
+    v.bus = { state: 'completed' };
+    v.storage = { state: 'completed' };
   }
   return v;
 }
 
 // Tracks previous minimap state so that just-completed glow fires only once per part
-let prevMinimapState = { cpu: null, ram: null, bus: null };
+let prevMinimapState = { cpu: null, ram: null, bus: null, storage: null };
 
 function renderMainStage(mainId) {
   MAIN_STAGE_IDS.forEach(id => setVisible(id, id === mainId));
 }
 
-// PCB-style minimap: each part has socket/slot + filled component (die or stick)
+// PCB-style minimap: each part has socket/slot + filled component (die / stick / module)
+const FILLED_ID = {
+  cpu: 'mini-cpu-die',
+  ram: 'mini-ram-stick',
+  storage: 'mini-storage-module'
+};
+const BG_BASE_CLASS = {
+  cpu: 'cpu-socket-bg',
+  ram: 'dimm-slot-bg',
+  storage: 'm2-slot-bg'
+};
+
 function setMiniBox(part, partState) {
   const bg     = document.getElementById(`mini-${part}-bg`);
   const status = document.getElementById(`mini-${part}-status`);
   const qmark  = document.getElementById(`mini-${part}-qmark`);
-  const filled = document.getElementById(part === 'cpu' ? 'mini-cpu-die' : 'mini-ram-stick');
+  const filled = document.getElementById(FILLED_ID[part]);
 
   const isFreshComplete = partState.state === 'completed' && prevMinimapState[part] !== 'completed';
 
-  const bgBase = part === 'cpu' ? 'cpu-socket-bg' : 'dimm-slot-bg';
+  const bgBase = BG_BASE_CLASS[part];
   let bgClass     = bgBase;
   let qmarkClass  = 'minimap-q-mark';
   let statusClass = 'minimap-status';
@@ -1247,6 +1448,7 @@ function renderMinimap(view) {
   setMiniBox('cpu', view.cpu);
   setMiniBox('ram', view.ram);
   setMiniBus(view.bus);
+  setMiniBox('storage', view.storage);
 }
 
 function renderStage() {
@@ -1260,12 +1462,14 @@ function setStepLabel(label) {
 }
 
 function updatePhasePills() {
-  // Order of phases: p1 → transition → p2 → transition2 → p3 → complete
-  const order = ['p1', 'transition', 'p2', 'transition2', 'p3', 'complete'];
+  // Order of phases: p1 → transition → p2 → transition2 → p3 → transition3 → p4 → complete
+  const order = ['p1', 'transition', 'p2', 'transition2', 'p3', 'transition3', 'p4', 'complete'];
   const currentIdx = order.indexOf(state.phase);
 
   // Map phase number → which order index represents "active" for that pill
-  const pillActiveIdx = { '1': 0, '2': 2, '3': 4 };
+  const pillActiveIdx = { '1': 0, '2': 2, '3': 4, '4': 6 };
+  // Each pill stays "active" during its preceding transition (which leads into that phase's predecessor)
+  const transitionToActivePill = { 'transition': '1', 'transition2': '2', 'transition3': '3' };
 
   const pills = els.phaseBar.querySelectorAll('.phase-pill[data-phase]');
   pills.forEach(p => {
@@ -1274,7 +1478,7 @@ function updatePhasePills() {
     const targetIdx = pillActiveIdx[ph];
     if (targetIdx === undefined) return;
 
-    if (currentIdx === targetIdx || (ph === '1' && state.phase === 'transition') || (ph === '2' && state.phase === 'transition2')) {
+    if (currentIdx === targetIdx || transitionToActivePill[state.phase] === ph) {
       p.classList.add('active');
     } else if (currentIdx > targetIdx) {
       p.classList.add('done');
@@ -1300,7 +1504,7 @@ function render() {
   els.submitBtn.disabled = false;
   els.myAnswer.focus();
 
-  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3') {
+  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3' || state.phase === 'p4') {
     const phaseData = data[state.phase];
     const stepData = phaseData.steps[state.step];
     currentStepData = stepData;
@@ -1313,7 +1517,7 @@ function render() {
 
     renderStage();
     setStepLabel(`${phaseData.phaseLabel} · 질문 ${state.step + 1}/3`);
-  } else if (state.phase === 'transition' || state.phase === 'transition2') {
+  } else if (state.phase === 'transition' || state.phase === 'transition2' || state.phase === 'transition3') {
     const tData = data[state.phase];
     currentStepData = tData;
     els.qLabel.textContent = 'PHASE 전환';
@@ -1323,8 +1527,12 @@ function render() {
     els.metaNote.style.display = 'none';
 
     renderStage();
-    const transitionLabel = state.phase === 'transition' ? 'P1 → P2 전환 질문' : 'P2 → P3 전환 질문';
-    setStepLabel(transitionLabel);
+    const transitionLabels = {
+      'transition':  'P1 → P2 전환 질문',
+      'transition2': 'P2 → P3 전환 질문',
+      'transition3': 'P3 → P4 전환 질문'
+    };
+    setStepLabel(transitionLabels[state.phase]);
   } else if (state.phase === 'complete') {
     showCompletionUI();
   }
@@ -1358,10 +1566,10 @@ function submitAnswer() {
   // Stage evolves: active area moves forward; completed parts remain on stage
   renderStage();
 
-  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3') {
+  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3' || state.phase === 'p4') {
     const phaseData = data[state.phase];
     setStepLabel(`${phaseData.phaseLabel} · 진화 ${state.step + 1}/3 ✓`);
-  } else if (state.phase === 'transition' || state.phase === 'transition2') {
+  } else if (state.phase === 'transition' || state.phase === 'transition2' || state.phase === 'transition3') {
     setStepLabel('전환 답 공개 ✓');
   }
 }
@@ -1394,6 +1602,13 @@ els.nextBtn.addEventListener('click', () => {
     render();
   } else if (state.phase === 'p3') {
     if (state.step < 2) { state.step += 1; render(); }
+    else { state.phase = 'transition3'; render(); }
+  } else if (state.phase === 'transition3') {
+    state.phase = 'p4';
+    state.step = 0;
+    render();
+  } else if (state.phase === 'p4') {
+    if (state.step < 2) { state.step += 1; render(); }
     else { state.phase = 'complete'; render(); }
   }
 });
@@ -1412,7 +1627,7 @@ function showCompletionUI() {
   els.answerBlock.classList.add('show');
   // Hide comparison cards, show only completion message in actual side
   els.mineText.parentElement.style.display = 'none';
-  els.actualText.innerHTML = data.p3.completeMsg;
+  els.actualText.innerHTML = data.p4.completeMsg;
   els.metaNote.innerHTML = `
     <span class="meta-label">🧪 형태 검증 포인트</span>
     이 프로토타입의 핵심: (1) 답을 직접 입력해야 시각이 변함 — 능동 회상 강제 작동? (2) 내 답 vs 실제 답 비교가 회상 효과 강화? (3) 페이즈 전환 질문이 부품 간 인과를 만듦? (4) "내가 빌드했다"는 소유감 — 정적 조감 대비 차이가 느껴졌나?
@@ -1426,15 +1641,16 @@ function jumpToPhase(phaseNum) {
   state.revealed = false;
   if (phaseNum === '1') {
     state.phase = 'p1';
-    prevMinimapState = { cpu: null, ram: null, bus: null };
+    prevMinimapState = { cpu: null, ram: null, bus: null, storage: null };
   } else if (phaseNum === '2') {
     state.phase = 'p2';
-    // CPU treated as already learned → suppress glow on its mini box
-    prevMinimapState = { cpu: 'completed', ram: null, bus: null };
+    prevMinimapState = { cpu: 'completed', ram: null, bus: null, storage: null };
   } else if (phaseNum === '3') {
     state.phase = 'p3';
-    // CPU·RAM both treated as already learned → suppress glow on both
-    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: null };
+    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: null, storage: null };
+  } else if (phaseNum === '4') {
+    state.phase = 'p4';
+    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: 'completed', storage: null };
   }
   els.nextBtn.style.display = '';
   els.mineText.parentElement.style.display = '';
