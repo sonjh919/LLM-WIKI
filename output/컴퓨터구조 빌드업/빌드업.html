@@ -118,7 +118,7 @@ header .principle b { color: #ffcc66; }
   font-size: 0.66rem;
   font-style: italic;
 }
-.minimap-stage { width: 100%; height: 145px; display: block; }
+.minimap-stage { width: 100%; height: 245px; display: block; }
 .minimap-stage * { transition: opacity 0.4s, fill 0.4s, stroke 0.4s, stroke-width 0.3s; }
 
 /* ── Stage (SVG canvas) ── */
@@ -443,6 +443,18 @@ header .principle b { color: #ffcc66; }
 .ssd-chip                   { fill: #0a0a0a; stroke: #2a3a35; stroke-width: 0.4; }
 .ssd-label                  { fill: #7ee0c8; font-size: 9px; font-weight: 700; font-family: 'SF Mono', monospace; }
 
+.io-panel-bg                { fill: #0d0d0d; stroke: #555; stroke-width: 1.2; }
+.io-panel-bg.transition     { stroke: #c792ea; stroke-width: 2; filter: drop-shadow(0 0 8px rgba(199,146,234,0.5)); }
+.io-panel-bg.active         { stroke: #ffcc66; stroke-width: 2; filter: drop-shadow(0 0 8px rgba(255,204,102,0.45)); }
+.io-panel-bg.completed      { stroke: #34d399; stroke-width: 1.5; }
+
+.io-port-usb     { fill: #1a1a1a; stroke: #888; stroke-width: 0.6; }
+.io-port-rj45    { fill: #0a1a14; stroke: #34d399; stroke-width: 0.7; }
+.io-port-hdmi    { fill: #1a0d15; stroke: #888; stroke-width: 0.6; }
+.io-port-audio   { fill: #1a1a1a; stroke: #888; stroke-width: 0.6; }
+.io-port-label   { fill: #888; font-size: 6px; font-family: 'SF Mono', monospace; }
+.io-panel-label  { fill: #7ee0c8; font-size: 9px; font-weight: 700; font-family: 'SF Mono', monospace; }
+
 .justCompleted-pcb { animation: pcbGlow 1.8s ease-out forwards; }
 @keyframes pcbGlow {
   0%   { stroke: #ffcc66; stroke-width: 3.5; filter: drop-shadow(0 0 18px rgba(255,204,102,0.9)); }
@@ -529,14 +541,14 @@ header .principle b { color: #ffcc66; }
   <span class="phase-arrow">→</span>
   <span class="phase-pill locked" data-phase="4">P4 · Storage</span>
   <span class="phase-arrow">→</span>
-  <span class="phase-pill locked">P5+ · 잠김</span>
+  <span class="phase-pill locked" data-phase="5">P5 · IO Device</span>
 </div>
 
 <!-- Minimap (누적 조감도 — PCB 메인보드) -->
 <div class="minimap-wrap" id="minimapWrap">
   <div class="minimap-label">[ 누적 조감도 — 빌드된 메인보드 ]</div>
   <div class="minimap-hint">학습 완료된 부품이 슬롯에 꽂힙니다</div>
-  <svg class="minimap-stage" viewBox="0 0 880 145" xmlns="http://www.w3.org/2000/svg">
+  <svg class="minimap-stage" viewBox="0 0 880 245" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <pattern id="pcbGridMini" width="14" height="14" patternUnits="userSpaceOnUse">
         <rect width="14" height="14" fill="none"/>
@@ -547,24 +559,30 @@ header .principle b { color: #ffcc66; }
       </pattern>
     </defs>
 
-    <!-- ===== PCB Board background ===== -->
-    <rect class="pcb-bg" x="0" y="0" width="880" height="145" rx="6"/>
-    <rect x="0" y="0" width="880" height="145" rx="6" fill="url(#pcbGridMini)"/>
+    <!-- ===== PCB Board background (2-layer 메인보드) ===== -->
+    <rect class="pcb-bg" x="0" y="0" width="880" height="245" rx="6"/>
+    <rect x="0" y="0" width="880" height="245" rx="6" fill="url(#pcbGridMini)"/>
 
-    <!-- Screw holes (decoration) -->
+    <!-- Screw holes (4모서리) -->
     <circle cx="14" cy="14" r="4" fill="none" stroke="#2a4a2f" stroke-width="0.8"/>
     <circle cx="866" cy="14" r="4" fill="none" stroke="#2a4a2f" stroke-width="0.8"/>
-    <circle cx="14" cy="131" r="4" fill="none" stroke="#2a4a2f" stroke-width="0.8"/>
-    <circle cx="866" cy="131" r="4" fill="none" stroke="#2a4a2f" stroke-width="0.8"/>
+    <circle cx="14" cy="231" r="4" fill="none" stroke="#2a4a2f" stroke-width="0.8"/>
+    <circle cx="866" cy="231" r="4" fill="none" stroke="#2a4a2f" stroke-width="0.8"/>
 
     <!-- Footer label -->
-    <text x="35" y="135" fill="rgba(150,180,150,0.3)" font-size="8" font-family="'SF Mono', monospace" letter-spacing="1">LLM-WIKI · STAGE-1</text>
+    <text x="35" y="237" fill="rgba(150,180,150,0.3)" font-size="8" font-family="'SF Mono', monospace" letter-spacing="1">LLM-WIKI · STAGE-1</text>
 
-    <!-- ===== BUS AREA (트레이스 자체가 부품) ===== -->
+    <!-- ===== SYSTEM BUS TRACE LAYER (위층 + 위→아래 + 아래층 부품 잇기) ===== -->
     <g id="mini-bus-area">
+      <!-- 위층 CPU↔DIMM 3가닥 -->
       <path id="mini-trace-1" class="pcb-trace bus-placeholder" d="M 195 60 L 230 60 L 250 70 L 320 70"/>
       <path id="mini-trace-2" class="pcb-trace bus-placeholder" d="M 195 75 L 320 75"/>
       <path id="mini-trace-3" class="pcb-trace bus-placeholder" d="M 195 90 L 230 90 L 250 80 L 320 80"/>
+      <!-- DIMM 하단에서 아래층으로 잇기 (가운데 세로) -->
+      <path id="mini-trace-4" class="pcb-trace bus-placeholder" d="M 470 92 L 470 175"/>
+      <!-- 아래층: 가운데에서 M.2(좌)와 IO(우) 양쪽으로 -->
+      <path id="mini-trace-5" class="pcb-trace bus-placeholder" d="M 470 175 L 270 175"/>
+      <path id="mini-trace-6" class="pcb-trace bus-placeholder" d="M 470 175 L 380 175"/>
       <text id="mini-bus-status" class="minimap-status placeholder" x="258" y="20" text-anchor="middle">미학습</text>
       <text class="socket-label" x="258" y="110" text-anchor="middle">[ SYSTEM BUS ]</text>
     </g>
@@ -632,36 +650,62 @@ header .principle b { color: #ffcc66; }
       <text id="mini-ram-qmark" class="minimap-q-mark" x="470" y="80" text-anchor="middle">?</text>
     </g>
 
-    <!-- ===== M.2 SLOT AREA (Storage, P4) — x:660~830 ===== -->
+    <!-- ============ 아래층 (y=140~225): M.2 SSD + I/O 패널 + P6+ ============ -->
+
+    <!-- ===== M.2 SLOT AREA (Storage, P4) — x:85~255 (아래층 좌) ===== -->
     <g id="mini-storage-area">
-      <!-- Slot frame -->
-      <rect id="mini-storage-bg" class="m2-slot-bg" x="660" y="62" width="170" height="22" rx="2"/>
-      <!-- Mount post (M.2 ratio key) -->
-      <circle class="m2-mount" cx="822" cy="73" r="3"/>
-
-      <!-- Socket label -->
-      <text class="socket-label" x="745" y="105" text-anchor="middle">[ M.2 SLOT ]</text>
-
-      <!-- Status text -->
-      <text id="mini-storage-status" class="minimap-status placeholder" x="745" y="50" text-anchor="middle">미학습</text>
-
-      <!-- SSD module (visible only when completed) -->
+      <rect id="mini-storage-bg" class="m2-slot-bg" x="85" y="160" width="170" height="22" rx="2"/>
+      <circle class="m2-mount" cx="247" cy="171" r="3"/>
+      <text class="socket-label" x="170" y="200" text-anchor="middle">[ M.2 SLOT ]</text>
+      <text id="mini-storage-status" class="minimap-status placeholder" x="170" y="148" text-anchor="middle">미학습</text>
       <g id="mini-storage-module" class="fade-hidden">
-        <rect class="ssd-pcb" x="660" y="58" width="170" height="30" rx="2"/>
-        <rect class="ssd-chip" x="668" y="64" width="34" height="18" rx="1"/>
-        <rect class="ssd-chip" x="706" y="64" width="34" height="18" rx="1"/>
-        <rect class="ssd-chip" x="744" y="64" width="34" height="18" rx="1"/>
-        <text class="ssd-label" x="800" y="76" text-anchor="middle">SSD</text>
+        <rect class="ssd-pcb" x="85" y="156" width="170" height="30" rx="2"/>
+        <rect class="ssd-chip" x="93" y="162" width="34" height="18" rx="1"/>
+        <rect class="ssd-chip" x="131" y="162" width="34" height="18" rx="1"/>
+        <rect class="ssd-chip" x="169" y="162" width="34" height="18" rx="1"/>
+        <text class="ssd-label" x="225" y="174" text-anchor="middle">SSD</text>
+      </g>
+      <text id="mini-storage-qmark" class="minimap-q-mark" x="170" y="178" text-anchor="middle">?</text>
+    </g>
+
+    <!-- ===== I/O PANEL (P5) — x:380~700 (아래층 중앙) ===== -->
+    <g id="mini-io-area">
+      <rect id="mini-io-bg" class="io-panel-bg" x="380" y="148" width="320" height="60" rx="3"/>
+      <text class="socket-label" x="540" y="225" text-anchor="middle">[ I/O PANEL ]</text>
+      <text id="mini-io-status" class="minimap-status placeholder" x="540" y="138" text-anchor="middle">미학습</text>
+
+      <!-- Ports (visible only when completed) -->
+      <g id="mini-io-ports" class="fade-hidden">
+        <!-- USB-A 2개 (좌측 상하) -->
+        <rect class="io-port-usb" x="395" y="158" width="34" height="16" rx="1"/>
+        <text class="io-port-label" x="412" y="169" text-anchor="middle">USB</text>
+        <rect class="io-port-usb" x="395" y="180" width="34" height="16" rx="1"/>
+        <text class="io-port-label" x="412" y="191" text-anchor="middle">USB</text>
+
+        <!-- RJ45 (이더넷 — 서버 핵심) -->
+        <rect class="io-port-rj45" x="445" y="160" width="50" height="36" rx="1"/>
+        <text class="io-port-label" x="470" y="180" text-anchor="middle" style="fill:#7ee0c8;">RJ45</text>
+        <text class="io-port-label" x="470" y="190" text-anchor="middle" style="fill:#7ee0c8;font-size:5.5px;">NIC</text>
+
+        <!-- HDMI -->
+        <rect class="io-port-hdmi" x="510" y="170" width="50" height="14" rx="1"/>
+        <text class="io-port-label" x="535" y="179" text-anchor="middle">HDMI</text>
+
+        <!-- USB-C -->
+        <rect class="io-port-usb" x="580" y="172" width="22" height="10" rx="2"/>
+        <text class="io-port-label" x="591" y="180" text-anchor="middle">USB-C</text>
+
+        <!-- 3.5mm Audio (원형) -->
+        <circle class="io-port-audio" cx="635" cy="178" r="6"/>
+        <text class="io-port-label" x="635" y="195" text-anchor="middle">AUDIO</text>
+
+        <!-- 패널 라벨 (우측 상단) -->
+        <text class="io-panel-label" x="690" y="160" text-anchor="end">I/O</text>
       </g>
 
-      <!-- Question mark -->
-      <text id="mini-storage-qmark" class="minimap-q-mark" x="745" y="80" text-anchor="middle">?</text>
+      <text id="mini-io-qmark" class="minimap-q-mark" x="540" y="186" text-anchor="middle">?</text>
     </g>
 
-    <!-- ===== FUTURE HINT (P5+) ===== -->
-    <g id="mini-future" opacity="0.5">
-      <text class="future-slot-label" x="858" y="78" text-anchor="middle" style="font-size:8px;">P5+</text>
-    </g>
   </svg>
 </div>
 
@@ -1069,6 +1113,139 @@ header .principle b { color: #ffcc66; }
 
       <text class="help-text" x="440" y="320" text-anchor="middle" style="fill:#7ee0c8;font-size:12px;font-weight:600;">✓ 비휘발성 대용량 — 프로그램은 Storage에서 RAM으로 로드된 뒤 CPU가 처리</text>
     </g>
+
+    <!-- ===== TRANSITION4: 외부와 단절 ===== -->
+    <g id="transition4-state" class="fade-hidden">
+      <!-- 좌측: 시스템 (CPU·RAM·Storage 박스 압축) -->
+      <g opacity="0.65">
+        <rect class="cpu-box" x="50" y="100" width="80" height="40" rx="4"/>
+        <text class="label-name" x="90" y="125" text-anchor="middle" fill="#ff8c66" style="font-size:11px;">CPU</text>
+        <rect class="ram-box" x="50" y="150" width="80" height="40" rx="4"/>
+        <text class="label-name" x="90" y="175" text-anchor="middle" fill="#ffcc66" style="font-size:11px;">RAM</text>
+        <rect class="storage-box" x="50" y="200" width="80" height="40" rx="4"/>
+        <text class="label-name" x="90" y="225" text-anchor="middle" fill="#7ee0c8" style="font-size:11px;">Storage</text>
+        <rect x="140" y="100" width="120" height="140" fill="rgba(167,139,250,0.13)" stroke="#a78bfa" stroke-width="1.5" rx="3"/>
+        <text x="200" y="170" text-anchor="middle" fill="#a78bfa" style="font-size:11px;font-weight:700;">SYSTEM BUS</text>
+      </g>
+      <text class="label-sub" x="155" y="90" text-anchor="middle" style="font-size:10px;">[ 컴퓨터 내부 ]</text>
+
+      <!-- 가운데: 단절 -->
+      <text class="placeholder-q" x="440" y="170" text-anchor="middle" style="font-size:60px;">?</text>
+      <text class="legacy-warn" x="440" y="220" text-anchor="middle" style="font-size:14px;">⚡ 통로 없음</text>
+
+      <!-- 우측: 외부 세계 -->
+      <g>
+        <text x="700" y="120" text-anchor="middle" style="font-size:30px;">👤</text>
+        <text class="label-sub" x="700" y="148" text-anchor="middle" style="font-size:10px;">사람</text>
+        <text class="label-sub" x="700" y="160" text-anchor="middle" style="font-size:9px;">키보드·모니터</text>
+
+        <text x="700" y="200" text-anchor="middle" style="font-size:30px;">🌐</text>
+        <text class="label-sub" x="700" y="228" text-anchor="middle" style="font-size:10px;">네트워크</text>
+        <text class="label-sub" x="700" y="240" text-anchor="middle" style="font-size:9px;">다른 컴퓨터</text>
+      </g>
+      <text class="label-sub" x="700" y="90" text-anchor="middle" style="font-size:10px;">[ 외부 세계 ]</text>
+
+      <text class="help-text" x="440" y="290" text-anchor="middle" style="fill:#dbb5ee;font-size:14px;font-weight:600;">→ 컴퓨터 내부와 외부를 잇는 통로가 필요</text>
+    </g>
+
+    <!-- ===== P5 STEP 0: IO Device 학습 시작 안내 ===== -->
+    <g id="p5-step0" class="fade-hidden">
+      <text class="placeholder-q" x="440" y="160" text-anchor="middle">?</text>
+      <text class="help-text" x="440" y="200" text-anchor="middle">I/O Device 학습 시작 — Q1 답을 떠올려보세요</text>
+      <text class="help-text" x="440" y="230" text-anchor="middle" style="fill:#556;font-size:11px;">CPU·RAM·Bus·Storage는 위 조감도에 박혔습니다 ↑</text>
+    </g>
+
+    <!-- ===== P5 STEP 1: I/O DEVICE 키워드 + 내부↔외부 경계 ===== -->
+    <g id="p5-step1" class="fade-hidden">
+      <text class="label-keyword" x="440" y="170" text-anchor="middle" style="font-size:46px;fill:#7ee0c8;font-weight:800;">I / O DEVICE</text>
+      <text x="440" y="200" text-anchor="middle" style="font-size:14px;fill:#aaa;font-weight:500;">Input / Output Device · 입출력 장치</text>
+
+      <!-- 경계 비유: 내부 ↔ 외부 -->
+      <g transform="translate(0, 230)">
+        <text x="220" y="20" text-anchor="middle" style="font-size:13px;fill:#aaa;">컴퓨터 내부</text>
+        <text x="220" y="40" text-anchor="middle" style="font-size:11px;fill:#666;">CPU·RAM·Storage</text>
+
+        <text x="440" y="30" text-anchor="middle" style="font-size:18px;fill:#7ee0c8;font-weight:700;">↔</text>
+        <text x="440" y="50" text-anchor="middle" style="font-size:11px;fill:#7ee0c8;font-weight:600;">경계 (I/O)</text>
+
+        <text x="660" y="20" text-anchor="middle" style="font-size:13px;fill:#aaa;">외부 세계</text>
+        <text x="660" y="40" text-anchor="middle" style="font-size:11px;fill:#666;">사람·다른 컴퓨터</text>
+      </g>
+    </g>
+
+    <!-- ===== P5 STEP 2: 외부와 단절 강조 ===== -->
+    <g id="p5-step2" class="fade-hidden">
+      <!-- 좌: 시스템 -->
+      <rect x="80" y="100" width="280" height="160" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <text class="label-sub" x="220" y="125" text-anchor="middle" style="font-size:12px;">컴퓨터 내부 (지금까지)</text>
+      <text class="label-name" x="140" y="160" text-anchor="middle" fill="#ff8c66" style="font-size:13px;">CPU</text>
+      <text class="label-name" x="220" y="160" text-anchor="middle" fill="#ffcc66" style="font-size:13px;">RAM</text>
+      <text class="label-name" x="300" y="160" text-anchor="middle" fill="#7ee0c8" style="font-size:13px;">Storage</text>
+      <text x="220" y="200" text-anchor="middle" fill="#a78bfa" style="font-size:13px;font-weight:700;">SYSTEM BUS</text>
+      <text class="label-sub" x="220" y="240" text-anchor="middle" style="font-size:11px;fill:#888;">내부적으로는 완벽</text>
+
+      <!-- 가운데: 단절 -->
+      <text class="legacy-warn" x="440" y="170" text-anchor="middle" style="font-size:20px;">⚡</text>
+      <text class="placeholder-q" x="440" y="210" text-anchor="middle" style="font-size:40px;">?</text>
+
+      <!-- 우: 불가능한 것들 -->
+      <text class="legacy-warn" x="650" y="135" text-anchor="middle" style="font-size:14px;">불가능한 것:</text>
+      <text class="label-sub" x="650" y="160" text-anchor="middle" style="font-size:12px;fill:#ff8c66;">✗ 사용자 입력 (키보드)</text>
+      <text class="label-sub" x="650" y="180" text-anchor="middle" style="font-size:12px;fill:#ff8c66;">✗ 화면 출력 (모니터)</text>
+      <text class="label-sub" x="650" y="200" text-anchor="middle" style="font-size:12px;fill:#ff8c66;">✗ 네트워크 요청·응답</text>
+      <text class="label-sub" x="650" y="225" text-anchor="middle" style="font-size:11px;">→ 외부와 단절된 컴퓨터</text>
+
+      <text class="help-text" x="440" y="320" text-anchor="middle" style="fill:#dbb5ee;font-size:13px;font-weight:600;">→ "내부와 외부를 잇는 통로가 필요"</text>
+    </g>
+
+    <!-- ===== P5 STEP 3: I/O Device 도입 (3분류 + NIC 강조) ===== -->
+    <g id="p5-step3" class="fade-hidden">
+      <!-- 좌: 시스템 (CPU·RAM·Storage 압축) -->
+      <g opacity="0.7">
+        <rect class="cpu-box" x="40" y="60" width="60" height="34" rx="4"/>
+        <text class="label-name" x="70" y="80" text-anchor="middle" fill="#ff8c66" style="font-size:10px;">CPU</text>
+        <rect class="ram-box" x="40" y="100" width="60" height="34" rx="4"/>
+        <text class="label-name" x="70" y="120" text-anchor="middle" fill="#ffcc66" style="font-size:10px;">RAM</text>
+        <rect class="storage-box" x="40" y="140" width="60" height="34" rx="4"/>
+        <text class="label-name" x="70" y="160" text-anchor="middle" fill="#7ee0c8" style="font-size:10px;">Storage</text>
+        <rect x="120" y="60" width="80" height="114" fill="rgba(167,139,250,0.12)" stroke="#a78bfa" stroke-width="1.2" rx="3"/>
+        <text x="160" y="118" text-anchor="middle" fill="#a78bfa" style="font-size:10px;font-weight:700;">BUS</text>
+      </g>
+
+      <!-- I/O Device 영역 (가운데~우측) -->
+      <rect x="240" y="55" width="600" height="180" rx="6" fill="rgba(126,224,200,0.04)" stroke="rgba(126,224,200,0.3)" stroke-width="1.5"/>
+      <text x="540" y="78" text-anchor="middle" fill="#7ee0c8" style="font-size:14px;font-weight:700;">I/O Device (3분류)</text>
+
+      <!-- 3분류 -->
+      <g transform="translate(260, 95)">
+        <rect width="170" height="60" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(126,224,200,0.4)" stroke-width="1"/>
+        <text x="85" y="20" text-anchor="middle" fill="#7ee0c8" style="font-size:11px;font-weight:700;">입력 (Input)</text>
+        <text x="85" y="38" text-anchor="middle" fill="#aaa" style="font-size:10px;">키보드 · 마우스</text>
+        <text x="85" y="52" text-anchor="middle" fill="#aaa" style="font-size:10px;">마이크</text>
+      </g>
+      <g transform="translate(440, 95)">
+        <rect width="170" height="60" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(126,224,200,0.4)" stroke-width="1"/>
+        <text x="85" y="20" text-anchor="middle" fill="#7ee0c8" style="font-size:11px;font-weight:700;">출력 (Output)</text>
+        <text x="85" y="38" text-anchor="middle" fill="#aaa" style="font-size:10px;">모니터 · 프린터</text>
+        <text x="85" y="52" text-anchor="middle" fill="#aaa" style="font-size:10px;">스피커</text>
+      </g>
+      <g transform="translate(620, 95)">
+        <rect width="200" height="60" rx="4" fill="rgba(255,204,102,0.06)" stroke="#ffcc66" stroke-width="1.5"/>
+        <text x="100" y="20" text-anchor="middle" fill="#ffd98a" style="font-size:11px;font-weight:700;">입출력 (Input/Output)</text>
+        <text x="100" y="38" text-anchor="middle" fill="#ffd98a" style="font-size:10px;font-weight:700;">★ NIC (네트워크)</text>
+        <text x="100" y="52" text-anchor="middle" fill="#aaa" style="font-size:10px;">USB · 터치스크린</text>
+      </g>
+
+      <!-- I/O 대응 메커니즘 -->
+      <text x="540" y="180" text-anchor="middle" style="fill:#aaa;font-size:11px;">I/O는 매우 느림 → <tspan style="fill:#7ee0c8;font-weight:600;">인터럽트</tspan> + <tspan style="fill:#7ee0c8;font-weight:600;">DMA</tspan>로 CPU 낭비 제거</text>
+      <text x="540" y="202" text-anchor="middle" style="fill:#aaa;font-size:11px;">서버 패러다임: Thread-per-Connection vs <tspan style="fill:#ffd98a;font-weight:600;">I/O 멀티플렉싱</tspan> (epoll·Selector)</text>
+      <text x="540" y="224" text-anchor="middle" style="fill:#888;font-size:10px;">Netty · Spring WebFlux · Node.js 이벤트 루프 — 모두 I/O 멀티플렉싱 위에 얹힘</text>
+
+      <!-- System ↔ I/O 화살표 -->
+      <path d="M 200 117 L 240 117" class="flow-arrow" marker-end="url(#arrow-y)"/>
+
+      <text class="help-text" x="440" y="295" text-anchor="middle" style="fill:#7ee0c8;font-size:13px;font-weight:600;">✓ 컴퓨터구조 5대 부품 완성 — 내부 + 통로 + 외부 연결까지</text>
+    </g>
   </svg>
 </div>
 
@@ -1239,12 +1416,43 @@ const data = {
       }
     ],
     completeMsg: "P4 완료 — Storage까지 빌드. CPU + RAM + System Bus + Storage 시스템. 메모리 계층 구조 완성 (레지스터·캐시·RAM·Storage). (다음: P5 IO Device 추가 예정)"
+  },
+
+  transition4: {
+    q: "지금 CPU + RAM + System Bus + Storage가 있어도 어떤 한계가 있을까?",
+    a: "내부적으로는 완벽하지만 <b>외부와 단절</b>. 사용자 입력(키보드)·화면 출력(모니터)·네트워크 요청 모두 불가능. → 컴퓨터 내부와 외부 세계를 잇는 <b>통로</b>가 필요."
+  },
+
+  p5: {
+    phaseLabel: 'P5 · IO Device',
+    initialStateId: 'p5-step0',
+    steps: [
+      {
+        q: "왜 이름이 'I/O Device'인가?",
+        a: "I/O Device = <b>Input/Output Device</b> (입출력 장치). 컴퓨터 <b>내부와 외부 세계의 경계</b>에 서서 데이터를 들여오고(Input) 내보내는(Output) 장치. 경계 상대: 사람(키보드·모니터) ↔ 컴퓨터, 컴퓨터(NIC) ↔ 컴퓨터.",
+        meta: "3분류(입력·출력·입출력) 즉답. 서버에서 NIC 중요성도 한 줄 힌트에 즉시 도달. \"컴퓨터끼리 통신하는 장치는?\" → NIC 자연 소환. <b>Storage도 엄밀히는 I/O</b>지만 보조기억장치로 별도 분류한다는 점.",
+        showId: 'p5-step1'
+      },
+      {
+        q: "기존 문제는? (외부와 단절)",
+        a: "CPU·RAM·System Bus·Storage만으로는 <b>외부와 소통 불가</b>. 사용자 입력·화면 출력·네트워크 요청·응답 전부 불가능. 컴퓨터 내부 부품들이 아무리 잘 연결되어 있어도 외부 세계와 끊긴 상태.",
+        meta: "내부 시스템(CPU·RAM·Bus·Storage)이 \"완성된 시스템\"인 줄 착각하기 쉬움. 사실은 <b>외부와 차단된 박스</b>. 사용자도 못 만나고 네트워크도 못 함 → 사실상 무용지물. \"컴퓨터의 가치 = 외부와의 연결\"이라는 관점.",
+        showId: 'p5-step2'
+      },
+      {
+        q: "어떻게 해결했나? (3분류 + I/O 멀티플렉싱)",
+        a: "I/O Device가 System Bus로 연결. 3분류: <b>입력</b>(키보드·마우스·마이크), <b>출력</b>(모니터·스피커), <b>입출력</b>(NIC·USB). 서버에선 <b>NIC가 핵심</b>. I/O 대응: <b>인터럽트</b>(완료 알림) + <b>DMA</b>(CPU 우회). 서버 패러다임: Thread-per-Connection vs <b>I/O 멀티플렉싱</b>(epoll·Selector) — Netty·WebFlux·Node.js의 기반.",
+        meta: "본인 메타 \"I/O 멀티플렉싱?\" → \"이벤트 루프?\"로 답. 방향 맞음, <b>이름 레이어만 다름</b>(epoll·Selector가 더 낮은 층). \"소켓 개념 미정착\"을 세션 중 자기 인식으로 후보 분리 → 학습 후보 백로그 발의. 5대 부품 조감도 시작점 못 잡음 → 부품 익혀도 흐름은 별도 스킬.",
+        showId: 'p5-step3'
+      }
+    ],
+    completeMsg: "P5 완료 — 컴퓨터구조 5대 부품 모두 빌드. CPU + RAM + System Bus + Storage + I/O Device 통합 시스템. 컴퓨터부품 학습 사이클 1회차 완성."
   }
 };
 
 // ── State machine ───────────────────────────────────────────────────
 const state = {
-  phase: 'p1',     // 'p1' | 'transition' | 'p2' | 'transition2' | 'p3' | 'transition3' | 'p4' | 'complete'
+  phase: 'p1',     // 'p1' | 'transition' | 'p2' | 'transition2' | 'p3' | 'transition3' | 'p4' | 'transition4' | 'p5' | 'complete'
   step: 0,         // index into phase steps (transition has no index)
   revealed: false  // current step's answer revealed?
 };
@@ -1273,7 +1481,8 @@ const MAIN_STAGE_IDS = [
   'empty-state', 'p1-step1', 'p1-step2', 'p1-step3',
   'transition-state', 'p2-step0', 'p2-step1', 'p2-step2', 'p2-step3',
   'transition2-state', 'p3-step0', 'p3-step1', 'p3-step2', 'p3-step3',
-  'transition3-state', 'p4-step0', 'p4-step1', 'p4-step2', 'p4-step3'
+  'transition3-state', 'p4-step0', 'p4-step1', 'p4-step2', 'p4-step3',
+  'transition4-state', 'p5-step0', 'p5-step1', 'p5-step2', 'p5-step3'
 ];
 
 function setVisible(id, visible) {
@@ -1290,7 +1499,8 @@ function computeView() {
     cpu: { state: 'placeholder', step: 0 },
     ram: { state: 'placeholder', step: 0 },
     bus: { state: 'placeholder', step: 0 },
-    storage: { state: 'placeholder', step: 0 }
+    storage: { state: 'placeholder', step: 0 },
+    io: { state: 'placeholder', step: 0 }
   };
 
   if (state.phase === 'p1') {
@@ -1338,18 +1548,36 @@ function computeView() {
     v.bus = { state: 'completed' };
     if (state.step === 2 && state.revealed) v.storage = { state: 'completed' };
     else                                    v.storage = { state: 'active', step: state.step };
-  } else if (state.phase === 'complete') {
-    v.main = 'p4-step3';
+  } else if (state.phase === 'transition4') {
+    v.main = state.revealed ? 'transition4-state' : 'p4-step3';
     v.cpu = { state: 'completed' };
     v.ram = { state: 'completed' };
     v.bus = { state: 'completed' };
     v.storage = { state: 'completed' };
+    v.io = state.revealed ? { state: 'transition' } : { state: 'placeholder' };
+  } else if (state.phase === 'p5') {
+    if (state.step === 0 && !state.revealed)      v.main = 'p5-step0';
+    else if (state.revealed)                       v.main = `p5-step${state.step + 1}`;
+    else                                           v.main = `p5-step${state.step}`;
+    v.cpu = { state: 'completed' };
+    v.ram = { state: 'completed' };
+    v.bus = { state: 'completed' };
+    v.storage = { state: 'completed' };
+    if (state.step === 2 && state.revealed) v.io = { state: 'completed' };
+    else                                    v.io = { state: 'active', step: state.step };
+  } else if (state.phase === 'complete') {
+    v.main = 'p5-step3';
+    v.cpu = { state: 'completed' };
+    v.ram = { state: 'completed' };
+    v.bus = { state: 'completed' };
+    v.storage = { state: 'completed' };
+    v.io = { state: 'completed' };
   }
   return v;
 }
 
 // Tracks previous minimap state so that just-completed glow fires only once per part
-let prevMinimapState = { cpu: null, ram: null, bus: null, storage: null };
+let prevMinimapState = { cpu: null, ram: null, bus: null, storage: null, io: null };
 
 function renderMainStage(mainId) {
   MAIN_STAGE_IDS.forEach(id => setVisible(id, id === mainId));
@@ -1359,12 +1587,14 @@ function renderMainStage(mainId) {
 const FILLED_ID = {
   cpu: 'mini-cpu-die',
   ram: 'mini-ram-stick',
-  storage: 'mini-storage-module'
+  storage: 'mini-storage-module',
+  io: 'mini-io-ports'
 };
 const BG_BASE_CLASS = {
   cpu: 'cpu-socket-bg',
   ram: 'dimm-slot-bg',
-  storage: 'm2-slot-bg'
+  storage: 'm2-slot-bg',
+  io: 'io-panel-bg'
 };
 
 function setMiniBox(part, partState) {
@@ -1420,7 +1650,7 @@ function setMiniBus(busState) {
   const traceClass = isFreshComplete
     ? `pcb-trace bus-completed bus-justCompleted`
     : `pcb-trace bus-${busState.state}`;
-  ['mini-trace-1', 'mini-trace-2', 'mini-trace-3'].forEach(id => {
+  ['mini-trace-1', 'mini-trace-2', 'mini-trace-3', 'mini-trace-4', 'mini-trace-5', 'mini-trace-6'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.setAttribute('class', traceClass);
   });
@@ -1449,6 +1679,7 @@ function renderMinimap(view) {
   setMiniBox('ram', view.ram);
   setMiniBus(view.bus);
   setMiniBox('storage', view.storage);
+  setMiniBox('io', view.io);
 }
 
 function renderStage() {
@@ -1462,14 +1693,18 @@ function setStepLabel(label) {
 }
 
 function updatePhasePills() {
-  // Order of phases: p1 → transition → p2 → transition2 → p3 → transition3 → p4 → complete
-  const order = ['p1', 'transition', 'p2', 'transition2', 'p3', 'transition3', 'p4', 'complete'];
+  // Order: p1 → transition → p2 → transition2 → p3 → transition3 → p4 → transition4 → p5 → complete
+  const order = ['p1', 'transition', 'p2', 'transition2', 'p3', 'transition3', 'p4', 'transition4', 'p5', 'complete'];
   const currentIdx = order.indexOf(state.phase);
 
-  // Map phase number → which order index represents "active" for that pill
-  const pillActiveIdx = { '1': 0, '2': 2, '3': 4, '4': 6 };
-  // Each pill stays "active" during its preceding transition (which leads into that phase's predecessor)
-  const transitionToActivePill = { 'transition': '1', 'transition2': '2', 'transition3': '3' };
+  const pillActiveIdx = { '1': 0, '2': 2, '3': 4, '4': 6, '5': 8 };
+  // Each pill stays "active" during its preceding transition
+  const transitionToActivePill = {
+    'transition':  '1',
+    'transition2': '2',
+    'transition3': '3',
+    'transition4': '4'
+  };
 
   const pills = els.phaseBar.querySelectorAll('.phase-pill[data-phase]');
   pills.forEach(p => {
@@ -1504,7 +1739,10 @@ function render() {
   els.submitBtn.disabled = false;
   els.myAnswer.focus();
 
-  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3' || state.phase === 'p4') {
+  const phaseSteps = ['p1', 'p2', 'p3', 'p4', 'p5'];
+  const transitions = ['transition', 'transition2', 'transition3', 'transition4'];
+
+  if (phaseSteps.includes(state.phase)) {
     const phaseData = data[state.phase];
     const stepData = phaseData.steps[state.step];
     currentStepData = stepData;
@@ -1517,7 +1755,7 @@ function render() {
 
     renderStage();
     setStepLabel(`${phaseData.phaseLabel} · 질문 ${state.step + 1}/3`);
-  } else if (state.phase === 'transition' || state.phase === 'transition2' || state.phase === 'transition3') {
+  } else if (transitions.includes(state.phase)) {
     const tData = data[state.phase];
     currentStepData = tData;
     els.qLabel.textContent = 'PHASE 전환';
@@ -1530,7 +1768,8 @@ function render() {
     const transitionLabels = {
       'transition':  'P1 → P2 전환 질문',
       'transition2': 'P2 → P3 전환 질문',
-      'transition3': 'P3 → P4 전환 질문'
+      'transition3': 'P3 → P4 전환 질문',
+      'transition4': 'P4 → P5 전환 질문'
     };
     setStepLabel(transitionLabels[state.phase]);
   } else if (state.phase === 'complete') {
@@ -1566,10 +1805,10 @@ function submitAnswer() {
   // Stage evolves: active area moves forward; completed parts remain on stage
   renderStage();
 
-  if (state.phase === 'p1' || state.phase === 'p2' || state.phase === 'p3' || state.phase === 'p4') {
+  if (['p1', 'p2', 'p3', 'p4', 'p5'].includes(state.phase)) {
     const phaseData = data[state.phase];
     setStepLabel(`${phaseData.phaseLabel} · 진화 ${state.step + 1}/3 ✓`);
-  } else if (state.phase === 'transition' || state.phase === 'transition2' || state.phase === 'transition3') {
+  } else if (['transition', 'transition2', 'transition3', 'transition4'].includes(state.phase)) {
     setStepLabel('전환 답 공개 ✓');
   }
 }
@@ -1609,6 +1848,13 @@ els.nextBtn.addEventListener('click', () => {
     render();
   } else if (state.phase === 'p4') {
     if (state.step < 2) { state.step += 1; render(); }
+    else { state.phase = 'transition4'; render(); }
+  } else if (state.phase === 'transition4') {
+    state.phase = 'p5';
+    state.step = 0;
+    render();
+  } else if (state.phase === 'p5') {
+    if (state.step < 2) { state.step += 1; render(); }
     else { state.phase = 'complete'; render(); }
   }
 });
@@ -1627,7 +1873,7 @@ function showCompletionUI() {
   els.answerBlock.classList.add('show');
   // Hide comparison cards, show only completion message in actual side
   els.mineText.parentElement.style.display = 'none';
-  els.actualText.innerHTML = data.p4.completeMsg;
+  els.actualText.innerHTML = data.p5.completeMsg;
   els.metaNote.innerHTML = `
     <span class="meta-label">🧪 형태 검증 포인트</span>
     이 프로토타입의 핵심: (1) 답을 직접 입력해야 시각이 변함 — 능동 회상 강제 작동? (2) 내 답 vs 실제 답 비교가 회상 효과 강화? (3) 페이즈 전환 질문이 부품 간 인과를 만듦? (4) "내가 빌드했다"는 소유감 — 정적 조감 대비 차이가 느껴졌나?
@@ -1641,16 +1887,19 @@ function jumpToPhase(phaseNum) {
   state.revealed = false;
   if (phaseNum === '1') {
     state.phase = 'p1';
-    prevMinimapState = { cpu: null, ram: null, bus: null, storage: null };
+    prevMinimapState = { cpu: null, ram: null, bus: null, storage: null, io: null };
   } else if (phaseNum === '2') {
     state.phase = 'p2';
-    prevMinimapState = { cpu: 'completed', ram: null, bus: null, storage: null };
+    prevMinimapState = { cpu: 'completed', ram: null, bus: null, storage: null, io: null };
   } else if (phaseNum === '3') {
     state.phase = 'p3';
-    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: null, storage: null };
+    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: null, storage: null, io: null };
   } else if (phaseNum === '4') {
     state.phase = 'p4';
-    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: 'completed', storage: null };
+    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: 'completed', storage: null, io: null };
+  } else if (phaseNum === '5') {
+    state.phase = 'p5';
+    prevMinimapState = { cpu: 'completed', ram: 'completed', bus: 'completed', storage: 'completed', io: null };
   }
   els.nextBtn.style.display = '';
   els.mineText.parentElement.style.display = '';
